@@ -10,7 +10,7 @@ module.exports = function (source, options) {
   if (methods.indexOf(source.method.toUpperCase()) === -1) {
     return 'Method not supported'
   } else {
-    code.push('var client = new RestClient("%s");', source.fullUrl)
+    code.push('var client = new RestClient("%q");', source.fullUrl)
     code.push('var request = new RestRequest(Method.%s);', source.method.toUpperCase())
   }
 
@@ -20,20 +20,20 @@ module.exports = function (source, options) {
   // construct headers
   if (headers.length) {
     headers.forEach(function (key) {
-      code.push('request.AddHeader("%s", "%s");', key, source.headersObj[key])
+      code.push('request.AddHeader("%q", "%q");', key, source.headersObj[key])
     })
   }
 
   // construct cookies
   if (source.cookies.length) {
     source.cookies.forEach(function (cookie) {
-      code.push('request.AddCookie("%s", "%s");', cookie.name, cookie.value)
+      code.push('request.AddCookie("%q", "%q");', cookie.name, cookie.value)
     })
   }
 
   if (source.postData.text) {
     code.push(
-      'request.AddParameter("%s", %s, ParameterType.RequestBody);',
+      'request.AddParameter("%q", %s, ParameterType.RequestBody);',
       helpers.getHeader(source.allHeaders, 'content-type'),
       JSON.stringify(source.postData.text)
     )

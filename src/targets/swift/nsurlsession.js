@@ -46,9 +46,9 @@ module.exports = function (source, options) {
         // we make it easier for the user to edit it according to his or her needs after pasting.
         // The user can just add/remove lines adding/removing body parameters.
         code.blank()
-          .push('let postData = NSMutableData(data: "%s=%s".data(using: String.Encoding.utf8)!)', source.postData.params[0].name, source.postData.params[0].value)
+          .push('let postData = NSMutableData(data: "%q=%s".data(using: String.Encoding.utf8)!)', source.postData.params[0].name, source.postData.params[0].value)
         for (let i = 1, len = source.postData.params.length; i < len; i++) {
-          code.push('postData.append("&%s=%s".data(using: String.Encoding.utf8)!)', source.postData.params[i].name, source.postData.params[i].value)
+          code.push('postData.append("&%q=%s".data(using: String.Encoding.utf8)!)', source.postData.params[i].name, source.postData.params[i].value)
         }
         break
 
@@ -68,7 +68,7 @@ module.exports = function (source, options) {
         */
         code.push(helpers.literalDeclaration('parameters', source.postData.params, opts))
           .blank()
-          .push('let boundary = "%s"', source.postData.boundary)
+          .push('let boundary = "%q"', source.postData.boundary)
           .blank()
           .push('var body = ""')
           .push('var error: NSError? = nil')
@@ -93,16 +93,16 @@ module.exports = function (source, options) {
 
       default:
         code.blank()
-          .push('let postData = NSData(data: "%s".data(using: String.Encoding.utf8)!)', source.postData.text)
+          .push('let postData = NSData(data: "%q".data(using: String.Encoding.utf8)!)', source.postData.text)
     }
   }
 
   code.blank()
     // NSURLRequestUseProtocolCachePolicy is the default policy, let's just always set it to avoid confusion.
-    .push('let request = NSMutableURLRequest(url: NSURL(string: "%s")! as URL,', source.fullUrl)
+    .push('let request = NSMutableURLRequest(url: NSURL(string: "%q")! as URL,', source.fullUrl)
     .push('                                        cachePolicy: .useProtocolCachePolicy,')
     .push('                                    timeoutInterval: %s)', parseInt(opts.timeout, 10).toFixed(1))
-    .push('request.httpMethod = "%s"', source.method)
+    .push('request.httpMethod = "%q"', source.method)
 
   if (req.hasHeaders) {
     code.push('request.allHTTPHeaderFields = headers')

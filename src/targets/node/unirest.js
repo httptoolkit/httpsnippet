@@ -22,14 +22,14 @@ module.exports = function (source, options) {
 
   code.push('const unirest = require("unirest");')
     .blank()
-    .push('const req = unirest("%s", "%s");', source.method, source.url)
+    .push('const req = unirest("%q", "%q");', source.method, source.url)
     .blank()
 
   if (source.cookies.length) {
     code.push('const CookieJar = unirest.jar();')
 
     source.cookies.forEach(function (cookie) {
-      code.push('CookieJar.add("%s=%s","%s");', encodeURIComponent(cookie.name), encodeURIComponent(cookie.value), source.url)
+      code.push('CookieJar.add("%q=%s","%q");', encodeURIComponent(cookie.name), encodeURIComponent(cookie.value), source.url)
     })
 
     code.push('req.jar(CookieJar);')

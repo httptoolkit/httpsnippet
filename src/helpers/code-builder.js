@@ -1,6 +1,6 @@
 'use strict'
 
-const util = require('util')
+const formatString = require('./format')
 
 /**
  * Helper object to format and aggragate lines of code.
@@ -62,29 +62,26 @@ class CodeBuilder {
    *   builder.buildLine(2, 'console.log("hello world")')
    *   // returns: 'console.log("\t\thello world")'
    *
-   *   builder.buildLine(2, 'console.log("%s %s")', 'hello', 'world')
+   *   builder.buildLine(2, 'console.log("%q %q")', 'hello', 'world')
    *   // returns: 'console.log("\t\thello world")'
    */
-  buildLine (indentationLevel, line) {
+  buildLine (indentationLevel, line, ...format) {
     let lineIndentation = ''
-    let slice = 2
-    if (Object.prototype.toString.call(indentationLevel) === '[object String]') {
-      slice = 1
-      line = indentationLevel
-      indentationLevel = 0
-    } else if (indentationLevel === null) {
-      return null
+    if (typeof indentationLevel !== 'number') {
+      return this.buildLine(0, ...arguments)
     }
+
+    if (!line) return
 
     while (indentationLevel) {
       lineIndentation += this.indentation
       indentationLevel--
     }
 
-    const format = Array.prototype.slice.call(arguments, slice, arguments.length)
-    format.unshift(lineIndentation + line)
+    // custom format option: escape %q
+    line = lineIndentation + line
 
-    return util.format.apply(this, format)
+    return formatString(line, ...format)
   }
 
   /**

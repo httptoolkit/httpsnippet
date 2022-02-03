@@ -22,7 +22,7 @@ module.exports = function (source, options) {
     .blank()
 
   // Set URL
-  code.push('url <- "%s"', source.url)
+  code.push('url <- "%q"', source.url)
     .blank()
 
   // Construct query string
@@ -31,7 +31,7 @@ module.exports = function (source, options) {
   delete source.queryObj.key
 
   if (source.queryString.length === 1) {
-    code.push('queryString <- list(%s = "%s")', Object.keys(qs), Object.values(qs).toString())
+    code.push('queryString <- list(%s = "%q")', Object.keys(qs), Object.values(qs).toString())
       .blank()
   } else if (source.queryString.length > 1) {
     let count = 1
@@ -40,9 +40,9 @@ module.exports = function (source, options) {
 
     for (const query in qs) {
       if (count++ !== queryCount - 1) {
-        code.push('  %s = "%s",', query, qs[query].toString())
+        code.push('  %s = "%q",', query, qs[query].toString())
       } else {
-        code.push('  %s = "%s"', query, qs[query].toString())
+        code.push('  %s = "%q"', query, qs[query].toString())
       }
     }
 

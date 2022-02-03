@@ -29,7 +29,7 @@ module.exports = function (source, options) {
   // construct headers
   if (headers.length) {
     headers.forEach(function (key) {
-      code.push(1, '.setHeader("%s", "%s")', key, source.allHeaders[key])
+      code.push(1, '.setHeader("%q", "%q")', key, source.allHeaders[key])
     })
   }
 

@@ -28,7 +28,7 @@ module.exports = function (source, options) {
       .blank()
   }
 
-  code.push('url = URI("%s")', source.fullUrl)
+  code.push('url = URI("%q")', source.fullUrl)
     .blank()
     .push('http = Net::HTTP.new(url.host, url.port)')
 
@@ -46,7 +46,7 @@ module.exports = function (source, options) {
   const headers = Object.keys(source.allHeaders)
   if (headers.length) {
     headers.forEach(function (key) {
-      code.push('request["%s"] = \'%s\'', key, source.allHeaders[key])
+      code.push('request["%q"] = \'%s\'', key, source.allHeaders[key])
     })
   }
 

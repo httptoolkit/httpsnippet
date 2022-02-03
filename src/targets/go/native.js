@@ -93,17 +93,17 @@ module.exports = function (source, options) {
     client = 'http.DefaultClient'
   }
 
-  code.push(indent, 'url := "%s"', source.fullUrl)
+  code.push(indent, 'url := "%q"', source.fullUrl)
     .blank()
 
   // If we have body content or not create the var and reader or nil
   if (source.postData.text) {
     code.push(indent, 'payload := strings.NewReader(%s)', JSON.stringify(source.postData.text))
       .blank()
-      .push(indent, 'req, %s := http.NewRequest("%s", url, payload)', errorPlaceholder, source.method)
+      .push(indent, 'req, %s := http.NewRequest("%q", url, payload)', errorPlaceholder, source.method)
       .blank()
   } else {
-    code.push(indent, 'req, %s := http.NewRequest("%s", url, nil)', errorPlaceholder, source.method)
+    code.push(indent, 'req, %s := http.NewRequest("%q", url, nil)', errorPlaceholder, source.method)
       .blank()
   }
 
@@ -112,7 +112,7 @@ module.exports = function (source, options) {
   // Add headers
   if (Object.keys(source.allHeaders).length) {
     Object.keys(source.allHeaders).forEach(function (key) {
-      code.push(indent, 'req.Header.Add("%s", "%s")', key, source.allHeaders[key])
+      code.push(indent, 'req.Header.Add("%q", "%q")', key, source.allHeaders[key])
     })
 
     code.blank()

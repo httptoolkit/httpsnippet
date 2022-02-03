@@ -38,7 +38,7 @@ module.exports = function (source, options) {
     .blank()
 
   // Set URL
-  code.push('url = "%s"', source.url)
+  code.push('url = "%q"', source.url)
     .blank()
 
   // Construct query string
@@ -85,7 +85,7 @@ module.exports = function (source, options) {
 
   if (headerCount === 1) {
     for (const header in headers) {
-      code.push('headers = { "%s": "%s" }', header, headers[header])
+      code.push('headers = { "%q": "%q" }', header, headers[header])
         .blank()
     }
   } else if (headerCount > 1) {
@@ -95,9 +95,9 @@ module.exports = function (source, options) {
 
     for (const header in headers) {
       if (count++ !== headerCount) {
-        code.push(1, '"%s": "%s",', header, headers[header])
+        code.push(1, '"%q": "%q",', header, headers[header])
       } else {
-        code.push(1, '"%s": "%s"', header, headers[header])
+        code.push(1, '"%q": "%q"', header, headers[header])
       }
     }
 

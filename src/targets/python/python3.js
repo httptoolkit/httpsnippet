@@ -28,15 +28,15 @@ module.exports = function (source, options) {
   if (protocol === 'https:') {
     if (options.insecureSkipVerify) {
       code.push(
-        'conn = http.client.HTTPSConnection("%s", context = ssl._create_unverified_context())',
+        'conn = http.client.HTTPSConnection("%q", context = ssl._create_unverified_context())',
         source.uriObj.host
       ).blank()
     } else {
-      code.push('conn = http.client.HTTPSConnection("%s")', source.uriObj.host)
+      code.push('conn = http.client.HTTPSConnection("%q")', source.uriObj.host)
         .blank()
     }
   } else {
-    code.push('conn = http.client.HTTPConnection("%s")', source.uriObj.host)
+    code.push('conn = http.client.HTTPConnection("%q")', source.uriObj.host)
       .blank()
   }
 
@@ -52,7 +52,7 @@ module.exports = function (source, options) {
   const headerCount = Object.keys(headers).length
   if (headerCount === 1) {
     for (const header in headers) {
-      code.push('headers = { "%s": "%s" }', header, headers[header])
+      code.push('headers = { "%q": "%q" }', header, headers[header])
         .blank()
     }
   } else if (headerCount > 1) {
@@ -62,9 +62,9 @@ module.exports = function (source, options) {
 
     for (const header in headers) {
       if (count++ !== headerCount) {
-        code.push('    "%s": "%s",', header, headers[header])
+        code.push('    "%q": "%q",', header, headers[header])
       } else {
-        code.push('    "%s": "%s"', header, headers[header])
+        code.push('    "%q": "%q"', header, headers[header])
       }
     }
 
@@ -76,13 +76,13 @@ module.exports = function (source, options) {
   const method = source.method
   const path = source.uriObj.path
   if (payload && headerCount) {
-    code.push('conn.request("%s", "%s", payload, headers)', method, path)
+    code.push('conn.request("%q", "%q", payload, headers)', method, path)
   } else if (payload && !headerCount) {
-    code.push('conn.request("%s", "%s", payload)', method, path)
+    code.push('conn.request("%q", "%q", payload)', method, path)
   } else if (!payload && headerCount) {
-    code.push('conn.request("%s", "%s", headers=headers)', method, path)
+    code.push('conn.request("%q", "%q", headers=headers)', method, path)
   } else {
-    code.push('conn.request("%s", "%s")', method, path)
+    code.push('conn.request("%q", "%q")', method, path)
   }
 
   // Get Response

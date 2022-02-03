@@ -22,9 +22,9 @@ module.exports = function (source, options) {
   const methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS']
 
   if (methods.indexOf(source.method.toUpperCase()) === -1) {
-    code.push('HttpResponse<String> response = Unirest.customMethod("%s","%s")', source.method.toUpperCase(), source.fullUrl)
+    code.push('HttpResponse<String> response = Unirest.customMethod("%q","%q")', source.method.toUpperCase(), source.fullUrl)
   } else {
-    code.push('HttpResponse<String> response = Unirest.%s("%s")', source.method.toLowerCase(), source.fullUrl)
+    code.push('HttpResponse<String> response = Unirest.%s("%q")', source.method.toLowerCase(), source.fullUrl)
   }
 
   // Add headers, including the cookies
@@ -33,7 +33,7 @@ module.exports = function (source, options) {
   // construct headers
   if (headers.length) {
     headers.forEach(function (key) {
-      code.push(1, '.header("%s", "%s")', key, source.allHeaders[key])
+      code.push(1, '.header("%q", "%q")', key, source.allHeaders[key])
     })
   }
 

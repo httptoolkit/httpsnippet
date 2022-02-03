@@ -24,18 +24,18 @@ module.exports = function (source, options) {
     .push('open Cohttp')
     .push('open Lwt')
     .blank()
-    .push('let uri = Uri.of_string "%s" in', source.fullUrl)
+    .push('let uri = Uri.of_string "%q" in', source.fullUrl)
 
   // Add headers, including the cookies
   const headers = Object.keys(source.allHeaders)
 
   if (headers.length === 1) {
-    code.push('let headers = Header.add (Header.init ()) "%s" "%s" in', headers[0], source.allHeaders[headers[0]])
+    code.push('let headers = Header.add (Header.init ()) "%q" "%q" in', headers[0], source.allHeaders[headers[0]])
   } else if (headers.length > 1) {
     code.push('let headers = Header.add_list (Header.init ()) [')
 
     headers.forEach(function (key) {
-      code.push(1, '("%s", "%s");', key, source.allHeaders[key])
+      code.push(1, '("%q", "%q");', key, source.allHeaders[key])
     })
 
     code.push('] in')

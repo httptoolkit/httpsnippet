@@ -32,7 +32,7 @@ module.exports = function (source, options) {
     reqOpts.rejectUnauthorized = false
   }
 
-  code.push('const http = require("%s");', source.uriObj.protocol.replace(':', ''))
+  code.push('const http = require("%q");', source.uriObj.protocol.replace(':', ''))
 
   code.blank()
     .push('const options = %s;', JSON.stringify(reqOpts, null, opts.indent))

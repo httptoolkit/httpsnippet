@@ -28,20 +28,20 @@ module.exports = function (source, options) {
 
   if (source.postData.text) {
     if (source.postData.boundary) {
-      code.push('val mediaType = MediaType.parse("%s; boundary=%s")', source.postData.mimeType, source.postData.boundary)
+      code.push('val mediaType = MediaType.parse("%q; boundary=%s")', source.postData.mimeType, source.postData.boundary)
     } else {
-      code.push('val mediaType = MediaType.parse("%s")', source.postData.mimeType)
+      code.push('val mediaType = MediaType.parse("%q")', source.postData.mimeType)
     }
     code.push('val body = RequestBody.create(mediaType, %s)', JSON.stringify(source.postData.text))
   }
 
   code.push('val request = Request.Builder()')
-  code.push(1, '.url("%s")', source.fullUrl)
+  code.push(1, '.url("%q")', source.fullUrl)
   if (methods.indexOf(source.method.toUpperCase()) === -1) {
     if (source.postData.text) {
-      code.push(1, '.method("%s", body)', source.method.toUpperCase())
+      code.push(1, '.method("%q", body)', source.method.toUpperCase())
     } else {
-      code.push(1, '.method("%s", null)', source.method.toUpperCase())
+      code.push(1, '.method("%q", null)', source.method.toUpperCase())
     }
   } else if (methodsWithBody.indexOf(source.method.toUpperCase()) >= 0) {
     if (source.postData.text) {
@@ -59,7 +59,7 @@ module.exports = function (source, options) {
   // construct headers
   if (headers.length) {
     headers.forEach(function (key) {
-      code.push(1, '.addHeader("%s", "%s")', key, source.allHeaders[key])
+      code.push(1, '.addHeader("%q", "%q")', key, source.allHeaders[key])
     })
   }
 

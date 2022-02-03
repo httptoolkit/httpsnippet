@@ -22,7 +22,7 @@ module.exports = function (command) {
       code.push('$headers=@{}')
       headers.forEach(function (key) {
         if (key !== 'connection') { // Not allowed
-          code.push('$headers.Add("%s", "%s")', key, source.headersObj[key])
+          code.push('$headers.Add("%q", "%q")', key, source.headersObj[key])
         }
       })
       commandOptions.push('-Headers $headers')

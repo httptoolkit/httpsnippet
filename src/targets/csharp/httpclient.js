@@ -68,7 +68,7 @@ module.exports = function (source, options) {
   }
   code.push(1, 'Method = %s,', method)
 
-  code.push(1, 'RequestUri = new Uri("%s"),', source.fullUrl)
+  code.push(1, 'RequestUri = new Uri("%q"),', source.fullUrl)
 
   const headers = Object.keys(source.allHeaders).filter(function (header) {
     switch (header.toLowerCase()) {
@@ -85,7 +85,7 @@ module.exports = function (source, options) {
     code.push(1, 'Headers =')
     code.push(1, '{')
     headers.forEach(function (key) {
-      code.push(2, '{ "%s", "%s" },', key, source.allHeaders[key])
+      code.push(2, '{ "%q", "%q" },', key, source.allHeaders[key])
     })
     code.push(1, '},')
   }
@@ -97,7 +97,7 @@ module.exports = function (source, options) {
         code.push(1, 'Content = new FormUrlEncodedContent(new Dictionary<string, string>')
         code.push(1, '{')
         source.postData.params.forEach(function (param) {
-          code.push(2, '{ "%s", "%s" },', param.name, param.value)
+          code.push(2, '{ "%q", "%q" },', param.name, param.value)
         })
         code.push(1, '}),')
         break
@@ -110,13 +110,13 @@ module.exports = function (source, options) {
           code.push(3, 'Headers =')
           code.push(3, '{')
           if (param.contentType) {
-            code.push(4, 'ContentType = new MediaTypeHeaderValue("%s"),', param.contentType)
+            code.push(4, 'ContentType = new MediaTypeHeaderValue("%q"),', param.contentType)
           }
           code.push(4, 'ContentDisposition = new ContentDispositionHeaderValue("form-data")')
           code.push(4, '{')
-          code.push(5, 'Name = "%s",', param.name)
+          code.push(5, 'Name = "%q",', param.name)
           if (param.fileName) {
-            code.push(5, 'FileName = "%s",', param.fileName)
+            code.push(5, 'FileName = "%q",', param.fileName)
           }
           code.push(4, '}')
           code.push(3, '}')
@@ -130,7 +130,7 @@ module.exports = function (source, options) {
         code.push(1, '{')
         code.push(2, 'Headers =')
         code.push(2, '{')
-        code.push(3, 'ContentType = new MediaTypeHeaderValue("%s")', contentType)
+        code.push(3, 'ContentType = new MediaTypeHeaderValue("%q")', contentType)
         code.push(2, '}')
         code.push(1, '}')
         break

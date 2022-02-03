@@ -45,11 +45,11 @@ module.exports = function (source, options) {
         // we make it easier for the user to edit it according to his or her needs after pasting.
         // The user can just add/remove lines adding/removing body parameters.
         code.blank()
-          .push('NSMutableData *postData = [[NSMutableData alloc] initWithData:[@"%s=%s" dataUsingEncoding:NSUTF8StringEncoding]];',
+          .push('NSMutableData *postData = [[NSMutableData alloc] initWithData:[@"%q=%s" dataUsingEncoding:NSUTF8StringEncoding]];',
             source.postData.params[0].name, source.postData.params[0].value)
 
         for (let i = 1, len = source.postData.params.length; i < len; i++) {
-          code.push('[postData appendData:[@"&%s=%s" dataUsingEncoding:NSUTF8StringEncoding]];',
+          code.push('[postData appendData:[@"&%q=%s" dataUsingEncoding:NSUTF8StringEncoding]];',
             source.postData.params[i].name, source.postData.params[i].value)
         }
         break
@@ -67,7 +67,7 @@ module.exports = function (source, options) {
         // we make it easier for the user to edit it according to his or her needs after pasting.
         // The user can just edit the parameters NSDictionary or put this part of a snippet in a multipart builder method.
         code.push(helpers.nsDeclaration('NSArray', 'parameters', source.postData.params, opts.pretty))
-          .push('NSString *boundary = @"%s";', source.postData.boundary)
+          .push('NSString *boundary = @"%q";', source.postData.boundary)
           .blank()
           .push('NSError *error;')
           .push('NSMutableString *body = [NSMutableString string];')
