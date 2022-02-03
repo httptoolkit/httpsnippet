@@ -13,20 +13,24 @@
 const CodeBuilder = require('../../helpers/code-builder')
 const helpers = require('../../helpers/headers')
 
-const Keyword = function (name) {
-  this.name = name
+class Keyword {
+  constructor (name) {
+    this.name = name
+  }
+
+  toString () {
+    return ':' + this.name
+  }
 }
 
-Keyword.prototype.toString = function () {
-  return ':' + this.name
-}
+class File {
+  constructor (path) {
+    this.path = path
+  }
 
-const File = function (path) {
-  this.path = path
-}
-
-File.prototype.toString = function () {
-  return '(clojure.java.io/file "' + this.path + '")'
+  toString () {
+    return '(clojure.java.io/file "' + this.path + '")'
+  }
 }
 
 const jsType = function (x) {
