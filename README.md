@@ -80,7 +80,7 @@ httpsnippet example.json --target http --output ./snippets -x '{"autoHost": fals
 *Required*
 Type: `object`
 
-Name of [conversion target](https://github.com/Mashape/httpsnippet/wiki/Targets)
+Name of [conversion target](TARGETS.md)
 
 ```js
 var HTTPSnippet = require('httpsnippet');
@@ -98,13 +98,13 @@ var snippet = new HTTPSnippet({
 *Required*
 Type: `string`
 
-Name of [conversion target](https://github.com/Mashape/httpsnippet/wiki/Targets)
+Name of [conversion target](TARGETS.md)
 
 #### options
 
 Type: `object`
 
-Target options, *see [wiki](https://github.com/Mashape/httpsnippet/wiki/Targets) for details*
+Target options, *see [target docs](https://github.com/httptoolkit/httpsnippet/blob/main/TARGETS.md) for details*
 
 ```js
 var HTTPSnippet = require('httpsnippet');
@@ -130,19 +130,19 @@ console.log(snippet.convert('node', {
 *Required*
 Type: `string`
 
-Name of [conversion target](https://github.com/Mashape/httpsnippet/wiki/Targets)
+Name of [conversion target](TARGETS.md)
 
 #### client
 
 Type: `string`
 
-Name of conversion target [client library](https://github.com/Mashape/httpsnippet/wiki/Targets)
+Name of conversion target [client library](TARGETS.md)
 
 #### options
 
 Type: `object`
 
-Target options, *see [wiki](https://github.com/Mashape/httpsnippet/wiki/Targets) for details*
+Target options, *see [target docs](https://github.com/httptoolkit/httpsnippet/blob/main/TARGETS.md) for details*
 
 ```js
 var HTTPSnippet = require('httpsnippet');
@@ -167,7 +167,7 @@ console.log(snippet.convert('node', 'unirest'));
 *Required*
 Type: `object`
 
-Representation of a [conversion target](https://github.com/Kong/httpsnippet/wiki/Creating-Targets). Can use this to use targets that are not officially supported.
+Representation of a [conversion target](https://github.com/httptoolkit/httpsnippet/blob/main/CONTRIBUTING.md#creating-new-conversion-targets). Can use this to use targets that are not officially supported.
 
 ```js
 const customLanguageTarget = require('httpsnippet-for-my-lang');
@@ -180,14 +180,14 @@ HTTPSnippet.addTarget(customLanguageTarget);
 *Required*
 Type: `string`
 
-Name of [conversion target](https://github.com/Mashape/httpsnippet/wiki/Targets)
+Name of [conversion target](TARGETS.md)
 
 ### client
 
 *Required*
 Type: `object`
 
-Representation of a [conversion target client](https://github.com/Kong/httpsnippet/wiki/Creating-Targets). Can use this to use target clients that are not officially supported.
+Representation of a [conversion target client](https://github.com/httptoolkit/httpsnippet/blob/main/CONTRIBUTING.md#creating-new-conversion-targets). Can use this to use target clients that are not officially supported.
 
 ```js
 const customClient = require('httpsnippet-for-my-node-http-client');
@@ -198,7 +198,7 @@ HTTPSnippet.addTargetClient('node', customClient);
 
 At the heart of this module is the [HAR Format](http://www.softwareishard.com/blog/har-12-spec/#request) as the HTTP request description format, please review some of the sample JSON HAR Request objects in [test fixtures](/test/fixtures/requests), or read the [HAR Docs](http://www.softwareishard.com/blog/har-12-spec/#request) for more details.
 
-For detailed information on each target, please review the [wiki](https://github.com/Mashape/httpsnippet/wiki).
+For detailed information on each target, please review the [target docs](./TARGETS.md).
 
 ## Bugs and feature requests
 
@@ -208,7 +208,7 @@ Have a bug or a feature request? Please first read the [issue guidelines](CONTRI
 
 Please read through our [contributing guidelines](CONTRIBUTING.md). Included are directions for opening issues, coding standards, and notes on development.
 
-For info on creating new conversion targets, please review this [guideline](https://github.com/Mashape/httpsnippet/wiki/Creating-Targets)
+For info on creating new conversion targets, please review this [guideline](https://github.com/httptoolkit/httpsnippet/blob/main/CONTRIBUTING.md#creating-new-conversion-targets)
 
 Moreover, if your pull request contains JavaScript patches or features, you must include relevant unit tests.
 
