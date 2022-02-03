@@ -16,6 +16,34 @@ class CodeBuilder {
     this.code = []
     this.indentation = indentation
     this.lineJoin = join || '\n'
+    this.indentLevel = 0
+  }
+
+  /**
+   * Increase indentation level
+   * @returns {this}
+   */
+  indent () {
+    this.indentLevel++
+    return this
+  }
+
+  /**
+   * Decrease indentation level
+   * @returns {this}
+   */
+  unindent () {
+    this.indentLevel--
+    return this
+  }
+
+  /**
+   * Reset indentation level
+   * @returns {this}
+   */
+  reindent () {
+    this.indentLevel = 0
+    return this
   }
 
   /**
