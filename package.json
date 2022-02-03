@@ -1,9 +1,9 @@
 {
   "version": "2.0.0",
-  "name": "httpsnippet",
-  "description": "HTTP Request snippet generator for *most* languages",
-  "author": "Ahmad Nassri <ahmad@mashape.com> (https://www.mashape.com/)",
-  "homepage": "https://github.com/Mashape/httpsnippet",
+  "name": "@httptoolkit/httpsnippet",
+  "description": "HTTP request snippet generator for *most* languages",
+  "author": "Tim Perry <tim@httptoolkit.tech>",
+  "homepage": "https://github.com/httptoolkit/httpsnippet",
   "license": "MIT",
   "main": "src/index.js",
   "bin": "bin/httpsnippet",
@@ -44,9 +44,9 @@
     "bin",
     "src"
   ],
-  "repository": "Mashape/httpsnippet",
+  "repository": "httptoolkit/httpsnippet",
   "bugs": {
-    "url": "https://github.com/Mashape/httpsnippet/issues"
+    "url": "https://github.com/httptoolkit/httpsnippet/issues"
   },
   "scripts": {
     "quick": "mocha --no-timeouts --fgrep 'Request Validation' --invert",

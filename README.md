@@ -1,22 +1,21 @@
-# HTTP Snippet [![version][npm-version]][npm-url] [![License][npm-license]][license-url]
+# @httptoolkit/HTTPSnippet [![Build Status](https://github.com/httptoolkit/httpsnippet/workflows/CI/badge.svg)](https://github.com/httptoolkit/httpsnippet/actions) [![Available on NPM](https://img.shields.io/npm/v/@httptoolkit/httpsnippet.svg)](https://npmjs.com/package/@httptoolkit/httpsnippet)
 
-> HTTP Request snippet generator for *many* languages & tools including: `cURL`, `HTTPie`, `Javascript`, `Node`, `C`, `Java`, `PHP`, `Objective-C`, `Swift`, `Python`, `Ruby`, `C#`, `Go`, `OCaml` and [more](https://github.com/Mashape/httpsnippet/wiki/Targets)!
+> _Part of [HTTP Toolkit](https://httptoolkit.tech): powerful tools for building, testing & debugging HTTP(S)_
 
-Relies on the popular [HAR](http://www.softwareishard.com/blog/har-12-spec/#request) format to import data and describe HTTP calls.
+Httpsnippet is an HTTP request snippet generator for *many* languages & tools including: `cURL`, `HTTPie`, `Javascript`, `Node`, `C`, `Java`, `PHP`, `Objective-C`, `Swift`, `Python`, `Ruby`, `C#`, `Go`, `OCaml` and [more](https://github.com/httptoolkit/httpsnippet/tree/main/src/targets)!
 
-See it in action on companion service: [APIembed](https://apiembed.com/)
+This library relies on the popular [HAR](http://www.softwareishard.com/blog/har-12-spec/#request) format to import data and describe HTTP calls.
 
-[![Build Status][travis-image]][travis-url]
-[![Downloads][npm-downloads]][npm-url]
+_This is a fork of Kong's (previous Mashape's) [httpsnippet](https://github.com/Kong/httpsnippet/) library, which appears to no longer be maintained. This version is in active production use in [HTTP Toolkit](https://httptoolkit.tech)._
 
 ## Install
 
 ```shell
 # to use in cli
-npm install --global httpsnippet
+npm install --global @httptoolkit/httpsnippet
 
 # to use as a module
-npm install --save httpsnippet
+npm install --save @httptoolkit/httpsnippet
 ```
 
 ## Usage
@@ -229,17 +228,3 @@ And constructed with the following guidelines:
 - Bug fixes and misc changes **bumps only the patch**
 
 For more information on SemVer, please visit <http://semver.org/>.
-
-## License
-
-[MIT](LICENSE) &copy; [Kong](https://konghq.com)
-
-[license-url]: https://github.com/Kong/httpsnippet/blob/master/LICENSE
-
-[travis-url]: https://travis-ci.org/Kong/httpsnippet
-[travis-image]: https://api.travis-ci.org/Kong/httpsnippet.svg?branch=master
-
-[npm-url]: https://www.npmjs.com/package/httpsnippet
-[npm-license]: https://img.shields.io/npm/l/httpsnippet.svg?style=flat-square
-[npm-version]: https://img.shields.io/npm/v/httpsnippet.svg?style=flat-square
-[npm-downloads]: https://img.shields.io/npm/dm/httpsnippet.svg?style=flat-square
