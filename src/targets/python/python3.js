@@ -52,7 +52,7 @@ module.exports = function (source, options) {
   const headerCount = Object.keys(headers).length
   if (headerCount === 1) {
     for (const header in headers) {
-      code.push('headers = { \'%s\': "%s" }', header, headers[header])
+      code.push('headers = { "%s": "%s" }', header, headers[header])
         .blank()
     }
   } else if (headerCount > 1) {
@@ -62,9 +62,9 @@ module.exports = function (source, options) {
 
     for (const header in headers) {
       if (count++ !== headerCount) {
-        code.push('    \'%s\': "%s",', header, headers[header])
+        code.push('    "%s": "%s",', header, headers[header])
       } else {
-        code.push('    \'%s\': "%s"', header, headers[header])
+        code.push('    "%s": "%s"', header, headers[header])
       }
     }
 
