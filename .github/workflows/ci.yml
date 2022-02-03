@@ -22,6 +22,3 @@ jobs:
 
       - run: npm ci
       - run: npm test
-      - run: npm run codeclimate
-        env:
-          CODECLIMATE_REPO_TOKEN: ${{ secrets.CODECLIMATE_REPO_TOKEN }}
