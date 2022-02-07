@@ -73,7 +73,8 @@ class CodeBuilder {
 
     if (!line) return
 
-    while (indentationLevel) {
+    indentationLevel += this.indentLevel
+    while (indentationLevel > 0) {
       lineIndentation += this.indentation
       indentationLevel--
     }
