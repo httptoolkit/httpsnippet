@@ -19,7 +19,7 @@ module.exports = function (source, options) {
       .push('struct curl_slist *headers = NULL;')
 
     headers.forEach(function (key) {
-      code.push('headers = curl_slist_append(headers, "%s: %s");', key, source.headersObj[key])
+      code.push('headers = curl_slist_append(headers, "%s: %qd");', key, source.headersObj[key])
     })
 
     code.push('curl_easy_setopt(hnd, CURLOPT_HTTPHEADER, headers);')

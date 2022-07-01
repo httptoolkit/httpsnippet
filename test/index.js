@@ -158,7 +158,8 @@ describe('HTTPSnippet', function () {
     req.headersObj.should.be.an.Object()
     req.headersObj.should.eql({
       accept: 'application/json',
-      'x-foo': 'Bar'
+      'x-foo': 'Bar',
+      'quoted-value': "\"quoted\" 'string'"
     })
 
     done()
@@ -177,7 +178,8 @@ describe('HTTPSnippet', function () {
     req.headersObj.should.eql({
       'Kong-Admin-Token': 'Hunter1',
       accept: 'application/json',
-      'x-foo': 'Bar'
+      'x-foo': 'Bar',
+      'quoted-value': "\"quoted\" 'string'"
     })
 
     done()
@@ -196,7 +198,8 @@ describe('HTTPSnippet', function () {
     req.headersObj.should.eql({
       'kong-admin-token': 'Hunter1',
       accept: 'application/json',
-      'x-foo': 'Bar'
+      'x-foo': 'Bar',
+      'quoted-value': "\"quoted\" 'string'"
     })
 
     done()

@@ -7,7 +7,8 @@ $request->setRequestUrl('http://mockbin.com/har');
 $request->setRequestMethod('GET');
 $request->setHeaders([
   'accept' => 'application/json',
-  'x-foo' => 'Bar'
+  'x-foo' => 'Bar',
+  'quoted-value' => '"quoted" \'string\''
 ]);
 
 $client->enqueue($request)->send();

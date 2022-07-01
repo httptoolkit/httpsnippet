@@ -11,6 +11,8 @@
 'use strict'
 
 const util = require('util')
+const { escape } = require('../../helpers/format')
+const { getHeader } = require('../../helpers/headers')
 const CodeBuilder = require('../../helpers/code-builder')
 
 module.exports = function (source, options) {
@@ -84,24 +86,28 @@ module.exports = function (source, options) {
   }
 
   // Construct headers
-  const headers = source.allHeaders
-  let headerCount = Object.keys(headers).length
-  let header = ''
-  let cookies
-  let accept
+  const cookieHeader = getHeader(source.allHeaders, 'cookie')
+  const acceptHeader = getHeader(source.allHeaders, 'accept')
 
-  for (const head in headers) {
-    if (head.toLowerCase() === 'accept') {
-      accept = ', accept("' + headers[head] + '")'
-      headerCount = headerCount - 1
-    } else if (head.toLowerCase() === 'cookie') {
-      cookies = ', set_cookies(`' + headers[head].replace(/;/g, '", `').replace(/` /g, '`').replace(/=/g, '` = "') + '")'
-      headerCount = headerCount - 1
-    } else if (head.toLowerCase() !== 'content-type') {
-      header = header + head.replace('-', '_') + " = '" + headers[head]
-      if (headerCount > 1) { header = header + "', " }
-    }
-  }
+  const setCookies = cookieHeader
+    ? 'set_cookies(`' + cookieHeader.replace(/;/g, '", `').replace(/` /g, '`').replace(/=/g, '` = "') + '")'
+    : undefined
+
+  const setAccept = acceptHeader
+    ? `accept("${escape(acceptHeader)}")`
+    : undefined
+
+  const setContentType = 'content_type("' + source.postData.mimeType + '")'
+
+  const otherHeaders = Object.entries(source.allHeaders)
+    // These headers are all handled separately:
+    .filter(([key]) => !['cookie', 'accept', 'content-type'].includes(key.toLowerCase()))
+    .map(([key, value]) => `${key.replace(/-/g, '_')} = '${escape(value, { delimiter: "'" })}'`)
+    .join(', ')
+
+  const setHeaders = otherHeaders
+    ? `add_headers(${otherHeaders})`
+    : undefined
 
   // Construct request
   const method = source.method
@@ -111,22 +117,14 @@ module.exports = function (source, options) {
     request += ', body = payload'
   }
 
-  if (header !== '') {
-    request += ', add_headers(' + header + "')"
-  }
-
   if (source.queryString.length) {
     request += ', query = queryString'
   }
 
-  request += ', content_type("' + source.postData.mimeType + '")'
+  const headerAdditions = [setHeaders, setContentType, setAccept, setCookies].filter(x => !!x).join(', ')
 
-  if (typeof accept !== 'undefined') {
-    request += accept
-  }
-
-  if (typeof cookies !== 'undefined') {
-    request += cookies
+  if (headerAdditions) {
+    request += ', ' + headerAdditions
   }
 
   if (source.postData.text || source.postData.jsonObj || source.postData.params) {

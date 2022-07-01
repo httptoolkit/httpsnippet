@@ -20,7 +20,7 @@ module.exports = function (source, options) {
   // construct headers
   if (headers.length) {
     headers.forEach(function (key) {
-      code.push('request.AddHeader("%s", "%s");', key, source.headersObj[key])
+      code.push('request.AddHeader("%s", "%qd");', key, source.headersObj[key])
     })
   }
 

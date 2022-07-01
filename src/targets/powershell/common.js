@@ -1,6 +1,7 @@
 'use strict'
 
 const CodeBuilder = require('../../helpers/code-builder')
+const { escape } = require('../../helpers/format')
 const helpers = require('../../helpers/headers')
 
 module.exports = function (command) {
@@ -22,7 +23,7 @@ module.exports = function (command) {
       code.push('$headers=@{}')
       headers.forEach(function (key) {
         if (key !== 'connection') { // Not allowed
-          code.push('$headers.Add("%s", "%s")', key, source.headersObj[key])
+          code.push('$headers.Add("%s", "%s")', key, escape(source.headersObj[key], { escapeChar: '`' }))
         }
       })
       commandOptions.push('-Headers $headers')

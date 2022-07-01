@@ -2,7 +2,8 @@ import Foundation
 
 let headers = [
   "accept": "application/json",
-  "x-foo": "Bar"
+  "x-foo": "Bar",
+  "quoted-value": "\"quoted\" 'string'"
 ]
 
 let request = NSMutableURLRequest(url: NSURL(string: "http://mockbin.com/har")! as URL,

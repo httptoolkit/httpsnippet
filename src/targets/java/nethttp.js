@@ -30,7 +30,7 @@ module.exports = function (source, options) {
   // construct headers
   if (headers.length) {
     headers.forEach(function (key) {
-      code.push(2, '.header("%s", "%s")', key, source.allHeaders[key])
+      code.push(2, '.header("%s", "%qd")', key, source.allHeaders[key])
     })
   }
 

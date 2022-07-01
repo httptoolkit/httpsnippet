@@ -112,7 +112,7 @@ module.exports = function (source, options) {
   // Add headers
   if (Object.keys(source.allHeaders).length) {
     Object.keys(source.allHeaders).forEach(function (key) {
-      code.push(indent, 'req.Header.Add("%s", "%s")', key, source.allHeaders[key])
+      code.push(indent, 'req.Header.Add("%s", "%qd")', key, source.allHeaders[key])
     })
 
     code.blank()

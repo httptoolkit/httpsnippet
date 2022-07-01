@@ -1,5 +1,7 @@
 'use strict'
 
+const { escape } = require('../../helpers/format')
+
 const convert = function (obj, indent, lastIndent) {
   let i, result
 
@@ -17,7 +19,7 @@ const convert = function (obj, indent, lastIndent) {
       break
 
     case '[object String]':
-      result = "'" + obj.replace(/\\/g, '\\\\').replace(/'/g, "'") + "'"
+      result = "'" + escape(obj, { delimiter: "'", escapeNewlines: false }) + "'"
       break
 
     case '[object Number]':

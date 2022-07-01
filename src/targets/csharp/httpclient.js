@@ -85,7 +85,7 @@ module.exports = function (source, options) {
     code.push(1, 'Headers =')
     code.push(1, '{')
     headers.forEach(function (key) {
-      code.push(2, '{ "%s", "%s" },', key, source.allHeaders[key])
+      code.push(2, '{ "%s", "%qd" },', key, source.allHeaders[key])
     })
     code.push(1, '},')
   }

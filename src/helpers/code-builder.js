@@ -1,6 +1,6 @@
 'use strict'
 
-const formatString = require('./format')
+const { format: formatString } = require('./format')
 
 /**
  * Helper object to format and aggragate lines of code.

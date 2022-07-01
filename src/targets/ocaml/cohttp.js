@@ -30,12 +30,12 @@ module.exports = function (source, options) {
   const headers = Object.keys(source.allHeaders)
 
   if (headers.length === 1) {
-    code.push('let headers = Header.add (Header.init ()) "%s" "%s" in', headers[0], source.allHeaders[headers[0]])
+    code.push('let headers = Header.add (Header.init ()) "%s" "%qd" in', headers[0], source.allHeaders[headers[0]])
   } else if (headers.length > 1) {
     code.push('let headers = Header.add_list (Header.init ()) [')
 
     headers.forEach(function (key) {
-      code.push(1, '("%s", "%s");', key, source.allHeaders[key])
+      code.push(1, '("%s", "%qd");', key, source.allHeaders[key])
     })
 
     code.push('] in')
