@@ -63,30 +63,30 @@ function singleQuoteEscape (value) {
  *
  * @returns {string} Formatted string
  */
-exports.format = function format (value, ...format) {
+exports.format = function format (value, ...formatVariables) {
   if (typeof value !== 'string') return ''
 
   let i = 0
   value = value.replace(/(?<!%)%([sdifjoOcv]|q[sd])/g, (m) => {
     // JSON-stringify
     if (m === '%v') {
-      const [elem] = format.splice(i, 1)
+      const [elem] = formatVariables.splice(i, 1)
       return JSON.stringify(elem)
     }
     // Escape for double-quoted string
     if (m === '%qd') {
-      const [elem] = format.splice(i, 1)
+      const [elem] = formatVariables.splice(i, 1)
       return doubleQuoteEscape(elem)
     }
     // Escape for single-quoted string
     if (m === '%qs') {
-      const [elem] = format.splice(i, 1)
+      const [elem] = formatVariables.splice(i, 1)
       return singleQuoteEscape(elem)
     }
     i += 1
     return m
   })
 
-  const ret = util.format(value, ...format)
+  const ret = util.format(value, ...formatVariables)
   return ret
 }
