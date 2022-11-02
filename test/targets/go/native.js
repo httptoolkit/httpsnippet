@@ -9,7 +9,7 @@ module.exports = function (HTTPSnippet, fixtures) {
     })
 
     result.should.be.a.String()
-    result.should.eql('url := "http://mockbin.com/har?foo=bar&foo=baz&baz=abc&key=value"\n\npayload := strings.NewReader("foo=bar")\n\nreq, _ := http.NewRequest("POST", url, payload)\n\nreq.Header.Add("cookie", "foo=bar; bar=baz")\nreq.Header.Add("accept", "application/json")\nreq.Header.Add("content-type", "application/x-www-form-urlencoded")\n\nres, _ := http.DefaultClient.Do(req)\n\ndefer res.Body.Close()\nbody, _ := ioutil.ReadAll(res.Body)\n\nfmt.Println(res)\nfmt.Println(string(body))')
+    result.should.eql('url := "http://mockbin.com/har?foo=bar&foo=baz&baz=abc&key=value"\n\npayload := strings.NewReader("foo=bar")\n\nreq, _ := http.NewRequest("POST", url, payload)\n\nreq.Header.Add("cookie", "foo=bar; bar=baz")\nreq.Header.Add("accept", "application/json")\nreq.Header.Add("content-type", "application/x-www-form-urlencoded")\n\nres, _ := http.DefaultClient.Do(req)\n\ndefer res.Body.Close()\nbody, _ := io.ReadAll(res.Body)\n\nfmt.Println(res)\nfmt.Println(string(body))')
   })
 
   it('should support checkErrors option', function () {
@@ -24,7 +24,7 @@ import (
 \t"fmt"
 \t"strings"
 \t"net/http"
-\t"io/ioutil"
+\t"io"
 )
 
 func main() {
@@ -48,7 +48,7 @@ func main() {
 \t}
 
 \tdefer res.Body.Close()
-\tbody, err := ioutil.ReadAll(res.Body)
+\tbody, err := io.ReadAll(res.Body)
 \tif err != nil {
 \t\tpanic(err)
 \t}
@@ -105,7 +105,7 @@ import (
 \t"time"
 \t"strings"
 \t"net/http"
-\t"io/ioutil"
+\t"io"
 )
 
 func main() {
@@ -127,7 +127,7 @@ func main() {
 \tres, _ := client.Do(req)
 
 \tdefer res.Body.Close()
-\tbody, _ := ioutil.ReadAll(res.Body)
+\tbody, _ := io.ReadAll(res.Body)
 
 \tfmt.Println(res)
 \tfmt.Println(string(body))
@@ -148,7 +148,7 @@ import (
 \t"crypto/tls"
 \t"strings"
 \t"net/http"
-\t"io/ioutil"
+\t"io"
 )
 
 func main() {
@@ -172,7 +172,7 @@ func main() {
 \tres, _ := client.Do(req)
 
 \tdefer res.Body.Close()
-\tbody, _ := ioutil.ReadAll(res.Body)
+\tbody, _ := io.ReadAll(res.Body)
 
 \tfmt.Println(res)
 \tfmt.Println(string(body))

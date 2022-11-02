@@ -58,7 +58,7 @@ module.exports = function (source, options) {
     code.push(indent, '"net/http"')
 
     if (opts.printBody) {
-      code.push(indent, '"io/ioutil"')
+      code.push(indent, '"io"')
     }
 
     code.push(')')
@@ -126,7 +126,7 @@ module.exports = function (source, options) {
   if (opts.printBody) {
     code.blank()
       .push(indent, 'defer res.Body.Close()')
-      .push(indent, 'body, %s := ioutil.ReadAll(res.Body)', errorPlaceholder)
+      .push(indent, 'body, %s := io.ReadAll(res.Body)', errorPlaceholder)
     errorCheck()
   }
 
