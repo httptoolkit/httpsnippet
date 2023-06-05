@@ -9,7 +9,6 @@ module.exports = function (HTTPSnippet, fixtures) {
     result.should.be.a.String()
     result.should.eql(`require 'uri'
 require 'net/http'
-require 'openssl'
 
 url = URI("https://mockbin.com/har")
 

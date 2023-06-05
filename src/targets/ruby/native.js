@@ -7,11 +7,6 @@ module.exports = function (source, options) {
 
   code.push('require \'uri\'')
     .push('require \'net/http\'')
-
-  if (source.uriObj.protocol === 'https:') {
-    code.push('require \'openssl\'')
-  }
-
   code.blank()
 
   // To support custom methods we check for the supported methods
