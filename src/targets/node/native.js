@@ -28,7 +28,7 @@ module.exports = function (source, options) {
     headers: source.allHeaders
   }
 
-  if (options.insecureSkipVerify) {
+  if (options && options.insecureSkipVerify) {
     reqOpts.rejectUnauthorized = false
   }
 
