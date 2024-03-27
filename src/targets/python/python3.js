@@ -11,14 +11,23 @@
 'use strict'
 
 const CodeBuilder = require('../../helpers/code-builder')
+const helpers = require('../../helpers/headers')
 
 module.exports = function (source, options) {
   const code = new CodeBuilder()
+
   // Start Request
   code.push('import http.client')
 
   if (options.insecureSkipVerify) {
     code.push('import ssl')
+  }
+
+  const mayBeGzipped = helpers.hasHeader(source.allHeaders, 'accept-encoding') &&
+    helpers.getHeader(source.allHeaders, 'accept-encoding').includes('gzip')
+
+  if (mayBeGzipped) {
+    code.push('import gzip')
   }
 
   code.blank()
@@ -90,7 +99,16 @@ module.exports = function (source, options) {
     .push('res = conn.getresponse()')
     .push('data = res.read()')
     .blank()
-    .push('print(data.decode("utf-8"))')
+
+  // Decode response
+  if (mayBeGzipped) {
+    code.push("if res.headers['content-encoding'] == 'gzip':")
+    code.push('    print(gzip.decompress(data).decode("utf-8"))')
+    code.push('else:')
+    code.push('    print(data.decode("utf-8"))')
+  } else {
+    code.push('print(data.decode("utf-8"))')
+  }
 
   return code.join()
 }
