@@ -45,6 +45,12 @@ const HTTPSnippet = function (data) {
     entry.request.headersSize = 0
     entry.request.postData.size = 0
 
+    // Add response
+    if (entry.response) {
+      entry.request.response = entry.response
+      entry.request.response.headers = entry.request.response.headers || []
+    }
+
     validate.request(entry.request, function (err, valid) {
       if (!valid) {
         throw err
@@ -63,6 +69,17 @@ HTTPSnippet.prototype.prepare = function (request) {
   request.allHeaders = {}
   request.postData.jsonObj = false
   request.postData.paramsObj = false
+
+  // Prepare response
+  if (request.response) {
+    request.response.headersObj = {}
+    if (request.response.headers && request.response.headers.length) {
+      request.response.headersObj = request.response.headers.reduce(function (headers, header) {
+        headers[header.name] = header.value
+        return headers
+      }, {})
+    }
+  }
 
   // construct query objects
   if (request.queryString && request.queryString.length) {
