@@ -56,7 +56,7 @@ module.exports = function (source, options) {
   switch (source.postData.mimeType) {
     case 'application/json':
       if (source.postData.jsonObj) {
-        code.push('payload = %s', helpers.literalRepresentation(source.postData.jsonObj, opts))
+        code.push('payload = %s', JSON.stringify(source.postData.jsonObj))
         jsonPayload = true
         hasPayload = true
       }
