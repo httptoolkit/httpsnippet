@@ -77,7 +77,7 @@ module.exports = {
         if (value === null || value === undefined) {
           return ''
         }
-        return '"' + value.toString().replace(/"/g, '\\"') + '"'
+        return JSON.stringify(value)
     }
   }
 }
