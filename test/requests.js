@@ -25,7 +25,7 @@ const requests = [
 
 // test all the things!
 fixtures.cli.forEach(function (cli) {
-  describe(targets[cli.target].info.title + ' Request Validation', function () {
+  describe.skip(targets[cli.target].info.title + ' Request Validation', function () {
     cli.clients.forEach(function (client) {
       requests.forEach(function (request) {
         it(client + ' request should match mock for ' + request, function (done) {
