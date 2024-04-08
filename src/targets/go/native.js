@@ -11,6 +11,7 @@
 'use strict'
 
 const CodeBuilder = require('../../helpers/code-builder')
+const helpers = require('../../helpers/headers')
 
 module.exports = function (source, options) {
   // Let's Go!
@@ -110,6 +111,11 @@ module.exports = function (source, options) {
   errorCheck()
 
   // Add headers
+
+  // Go automatically adds this and handles decompression, as long as we don't try to
+  // manually add it ourselves:
+  delete source.allHeaders[helpers.getHeaderName(source.allHeaders, 'accept-encoding')]
+
   if (Object.keys(source.allHeaders).length) {
     Object.keys(source.allHeaders).forEach(function (key) {
       code.push(indent, 'req.Header.Add("%s", "%qd")', key, source.allHeaders[key])

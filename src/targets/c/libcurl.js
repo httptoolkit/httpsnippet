@@ -1,6 +1,7 @@
 'use strict'
 
 const CodeBuilder = require('../../helpers/code-builder')
+const helpers = require('../../helpers/headers')
 
 module.exports = function (source, options) {
   const code = new CodeBuilder()
@@ -26,14 +27,19 @@ module.exports = function (source, options) {
   }
 
   // construct cookies
-  if (source.allHeaders.cookie) {
+  if (helpers.hasHeader(source.allHeaders, 'cookie')) {
     code.blank()
-      .push('curl_easy_setopt(hnd, CURLOPT_COOKIE, "%s");', source.allHeaders.cookie)
+      .push('curl_easy_setopt(hnd, CURLOPT_COOKIE, "%s");', helpers.getHeader(source.allHeaders, 'cookie'))
   }
 
   if (source.postData.text) {
     code.blank()
       .push('curl_easy_setopt(hnd, CURLOPT_POSTFIELDS, %s);', JSON.stringify(source.postData.text))
+  }
+
+  if (helpers.hasHeader(source.allHeaders, 'accept-encoding')) {
+    code.blank()
+      .push('curl_easy_setopt(hnd, CURLOPT_ACCEPT_ENCODING, "");')
   }
 
   code.blank()
