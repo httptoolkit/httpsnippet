@@ -12,8 +12,6 @@ func main() {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("accept-encoding", "deflate, gzip, br")
-
 	res, _ := http.DefaultClient.Do(req)
 
 	defer res.Body.Close()
