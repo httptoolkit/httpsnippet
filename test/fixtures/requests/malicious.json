@@ -1,0 +1,144 @@
+{
+    "method": "POST",
+    "url": "http://example.test/'\"`$(%(%{{{\\0%s\\/",
+    "queryString": [
+      {
+        "name": "'",
+        "value": "squote-key-test"
+      },
+      {
+        "name": "squote-value-test",
+        "value": "'"
+      },
+      {
+        "name": "\"",
+        "value": "dquote-key-test"
+      },
+      {
+        "name": "dquote-value-test",
+        "value": "\""
+      },
+      {
+        "name": "`",
+        "value": "backtick-key-test"
+      },
+      {
+        "name": "backtick-value-test",
+        "value": "`"
+      },
+      {
+        "name": "$(",
+        "value": "dollar-parenthesis-key-test"
+      },
+      {
+        "name": "dollar-parenthesis-value-test",
+        "value": "$("
+      },
+      {
+        "name": "#{",
+        "value": "hash-brace-key-test"
+      },
+      {
+        "name": "hash-brace-value-test",
+        "value": "#{"
+      },
+      {
+        "name": "%(",
+        "value": "percent-parenthesis-key-test"
+      },
+      {
+        "name": "percent-parenthesis-value-test",
+        "value": "%("
+      },
+      {
+        "name": "%{",
+        "value": "percent-brace-key-test"
+      },
+      {
+        "name": "percent-brace-value-test",
+        "value": "%{"
+      },
+      {
+        "name": "{{",
+        "value": "double-brace-key-test"
+      },
+      {
+        "name": "double-brace-value-test",
+        "value": "{{"
+      },
+      {
+        "name": "\\0",
+        "value": "null-key-test"
+      },
+      {
+        "name": "null-value-test",
+        "value": "\\0"
+      },
+      {
+        "name": "%s",
+        "value": "string-fmt-key-test"
+      },
+      {
+        "name": "string-fmt-value-test",
+        "value": "%s"
+      },
+      {
+        "name": "\\",
+        "value": "slash-key-test"
+      },
+      {
+        "name": "slash-value-test",
+        "value": "\\"
+      }
+    ],
+    "headers": [
+      {
+        "name": "squote-value-test",
+        "value": "'"
+      },
+      {
+        "name": "dquote-value-test",
+        "value": "\""
+      },
+      {
+        "name": "backtick-value-test",
+        "value": "`"
+      },
+      {
+        "name": "dollar-parenthesis-value-test",
+        "value": "$("
+      },
+      {
+        "name": "hash-brace-value-test",
+        "value": "#{"
+      },
+      {
+        "name": "percent-parenthesis-value-test",
+        "value": "%("
+      },
+      {
+        "name": "percent-brace-value-test",
+        "value": "%{"
+      },
+      {
+        "name": "double-brace-value-test",
+        "value": "{{"
+      },
+      {
+        "name": "null-value-test",
+        "value": "\\0"
+      },
+      {
+        "name": "string-fmt-value-test",
+        "value": "%s"
+      },
+      {
+        "name": "slash-value-test",
+        "value": "\\"
+      }
+    ],
+    "postData": {
+      "mimeType": "text/plain",
+      "text": "' \" ` $( #{ %( %{ {{ \\0 %s \\"
+    }
+  }

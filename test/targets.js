@@ -42,7 +42,32 @@ const itShouldHaveInfo = function (name, obj) {
 // TODO: investigate issues with these fixtures
 const skipMe = {
   clojure: {
-    clj_http: ['jsonObj-null-value', 'jsonObj-multiline']
+    clj_http: ['jsonObj-null-value', 'jsonObj-multiline', 'malicious']
+  },
+  javascript: {
+    axios: ['malicious'],
+    fetch: ['malicious']
+  },
+  node: {
+    axios: ['malicious'],
+    fetch: ['malicious'],
+    request: ['malicious']
+  },
+  objc: {
+    nsurlsession: ['malicious']
+  },
+  powershell: {
+    restmethod: ['malicious'],
+    webrequest: ['malicious']
+  },
+  python: {
+    requests: ['malicious']
+  },
+  r: {
+    httr: ['malicious']
+  },
+  swift: {
+    nsurlsession: ['malicious']
   },
   '*': {
     '*': []
