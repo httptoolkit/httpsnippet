@@ -12,6 +12,7 @@
 
 const CodeBuilder = require('../../helpers/code-builder')
 const helpers = require('../../helpers/headers')
+const { escape } = require('../../helpers/format')
 
 const Keyword = function (name) {
   this.name = name
@@ -60,7 +61,7 @@ const padBlock = function (x, s) {
 const jsToEdn = function (js) {
   switch (jsType(js)) {
     case 'string':
-      return '"' + js.replace(/"/g, '\\"') + '"'
+      return '"' + escape(js, { delimiter: '"' }) + '"'
     case 'file':
       return js.toString()
     case 'keyword':
@@ -73,7 +74,14 @@ const jsToEdn = function (js) {
       const obj = Object.keys(js)
         .reduce(function (acc, key) {
           const val = padBlock(key.length + 2, jsToEdn(js[key]))
-          return acc + ':' + key + ' ' + val + '\n '
+
+          // This check is overly strict, but good enough for us for
+          // all typical HTTP values we care about
+          const safeKey = key.match(/^[a-zA-Z_][\w-]*$/)
+            ? ':' + key
+            : jsToEdn(key)
+
+          return acc + safeKey + ' ' + val + '\n '
         }, '')
         .trim()
       return '{' + padBlock(1, obj) + '}'
