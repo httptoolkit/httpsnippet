@@ -91,7 +91,9 @@ module.exports = function (source, options) {
 
       default:
         code.blank()
-          .push('NSData *postData = [[NSData alloc] initWithData:[@"' + source.postData.text + '" dataUsingEncoding:NSUTF8StringEncoding]];')
+          .push('NSData *postData = [[NSData alloc] initWithData:[' +
+              helpers.literalRepresentation(source.postData.text) +
+            ' dataUsingEncoding:NSUTF8StringEncoding]];')
     }
   }
 
