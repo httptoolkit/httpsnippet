@@ -44,15 +44,6 @@ const skipMe = {
   clojure: {
     clj_http: ['jsonObj-null-value', 'jsonObj-multiline', 'malicious']
   },
-  javascript: {
-    axios: ['malicious'],
-    fetch: ['malicious']
-  },
-  node: {
-    axios: ['malicious'],
-    fetch: ['malicious'],
-    request: ['malicious']
-  },
   objc: {
     nsurlsession: ['malicious']
   },

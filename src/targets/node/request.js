@@ -11,7 +11,7 @@
 'use strict'
 
 const util = require('util')
-const stringifyObject = require('stringify-object')
+const stringifyObject = require('../../helpers/stringify-js-object')
 const CodeBuilder = require('../../helpers/code-builder')
 
 module.exports = function (source, options) {
