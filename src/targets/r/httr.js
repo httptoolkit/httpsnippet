@@ -41,10 +41,14 @@ module.exports = function (source, options) {
     code.push('queryString <- list(')
 
     for (const query in qs) {
+      const safeKey = query.match(/^[a-zA-Z][\w._]*$/)
+        ? query
+        : '"' + escape(query) + '"'
+
       if (count++ !== queryCount - 1) {
-        code.push('  %s = "%s",', query, qs[query].toString())
+        code.push('  %s = "%qd",', safeKey, qs[query].toString())
       } else {
-        code.push('  %s = "%s"', query, qs[query].toString())
+        code.push('  %s = "%qd"', safeKey, qs[query].toString())
       }
     }
 

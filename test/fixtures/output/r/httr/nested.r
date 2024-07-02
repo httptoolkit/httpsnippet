@@ -3,7 +3,7 @@ library(httr)
 url <- "http://mockbin.com/har"
 
 queryString <- list(
-  foo[bar] = "baz,zap",
+  "foo[bar]" = "baz,zap",
   fiz = "buz"
 )
 

@@ -21,7 +21,7 @@ module.exports = function (source, options) {
     options
   )
 
-  const stringifyObject = require('stringify-object')
+  const stringifyObject = require('../../helpers/stringify-js-object')
   const code = new CodeBuilder(opts.indent)
 
   options = {
@@ -85,7 +85,7 @@ module.exports = function (source, options) {
       .blank()
   }
 
-  code.push("fetch('%s', options)", source.fullUrl)
+  code.push('fetch(%s, options)', stringifyObject(source.fullUrl))
     .push(1, '.then(response => response.json())')
     .push(1, '.then(response => console.log(response))')
     .push(1, '.catch(err => console.error(err));')

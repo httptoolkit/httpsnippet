@@ -62,7 +62,12 @@ module.exports = {
       case '[object Object]': {
         const keyValuePairs = []
         for (const k in value) {
-          keyValuePairs.push(util.format('"%s": %s', k, this.literalRepresentation(value[k], opts, indentLevel)))
+          keyValuePairs.push(
+            util.format('%s: %s',
+              this.literalRepresentation(k, opts, indentLevel),
+              this.literalRepresentation(value[k], opts, indentLevel)
+            )
+          )
         }
         return concatValues('object', keyValuePairs, opts.pretty && keyValuePairs.length > 1, opts.indent, indentLevel)
       }

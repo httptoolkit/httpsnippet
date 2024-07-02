@@ -2,6 +2,8 @@
 
 const util = require('util')
 
+const { escape } = require('../../helpers/format')
+
 module.exports = {
   /**
    * Create an string of given length filled with blank spaces
@@ -73,7 +75,7 @@ module.exports = {
         if (value === null || value === undefined) {
           return ''
         }
-        return '@"' + value.toString().replace(/"/g, '\\"') + '"'
+        return '@"' + escape(value.toString(), { delimiter: '"' }) + '"'
     }
   }
 }
