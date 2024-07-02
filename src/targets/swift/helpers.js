@@ -1,6 +1,7 @@
 'use strict'
 
 const util = require('util')
+const { escape } = require('../../helpers/format')
 
 /**
  * Create an string of given length filled with blank spaces
@@ -72,7 +73,12 @@ module.exports = {
       case '[object Object]': {
         const keyValuePairs = []
         for (const k in value) {
-          keyValuePairs.push(util.format('"%s": %s', k, this.literalRepresentation(value[k], opts, indentLevel)))
+          keyValuePairs.push(
+            util.format('%s: %s',
+              this.literalRepresentation(k, opts, indentLevel),
+              this.literalRepresentation(value[k], opts, indentLevel)
+            )
+          )
         }
         return concatArray(keyValuePairs, opts.pretty && keyValuePairs.length > 1, opts.indent, indentLevel)
       }
@@ -84,7 +90,7 @@ module.exports = {
         if (value === null || value === undefined) {
           return ''
         }
-        return '"' + value.toString().replace(/"/g, '\\"') + '"'
+        return '"' + escape(value.toString()) + '"'
     }
   }
 }

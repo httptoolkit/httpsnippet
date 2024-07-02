@@ -47,9 +47,6 @@ const skipMe = {
   r: {
     httr: ['malicious']
   },
-  swift: {
-    nsurlsession: ['malicious']
-  },
   '*': {
     '*': []
   }
