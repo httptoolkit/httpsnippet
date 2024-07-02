@@ -44,9 +44,6 @@ const skipMe = {
   clojure: {
     clj_http: ['jsonObj-null-value', 'jsonObj-multiline']
   },
-  r: {
-    httr: ['malicious']
-  },
   '*': {
     '*': []
   }
