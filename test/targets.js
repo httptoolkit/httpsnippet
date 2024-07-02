@@ -44,10 +44,6 @@ const skipMe = {
   clojure: {
     clj_http: ['jsonObj-null-value', 'jsonObj-multiline']
   },
-  powershell: {
-    restmethod: ['malicious'],
-    webrequest: ['malicious']
-  },
   python: {
     requests: ['malicious']
   },

@@ -1,8 +1,15 @@
 'use strict'
 
 const CodeBuilder = require('../../helpers/code-builder')
-const { escape } = require('../../helpers/format')
 const helpers = require('../../helpers/headers')
+
+// Within a single quote, the ONLY character to worry about is the single quote
+// itself (escaped by doubling). Newlines, backticks, slashes etc are all treated
+// as literal characters.
+const psSqEscape = function (input) {
+  return input
+    .replace(/'/g, "''")
+}
 
 module.exports = function (command) {
   return function (source, options) {
@@ -23,7 +30,10 @@ module.exports = function (command) {
       code.push('$headers=@{}')
       headers.forEach(function (key) {
         if (key !== 'connection') { // Not allowed
-          code.push('$headers.Add("%s", "%s")', key, escape(source.headersObj[key], { escapeChar: '`' }))
+          code.push("$headers.Add('%s', '%s')",
+            psSqEscape(key),
+            psSqEscape(source.headersObj[key])
+          )
         }
       })
       commandOptions.push('-Headers $headers')
@@ -36,9 +46,9 @@ module.exports = function (command) {
       source.cookies.forEach(function (cookie) {
         code.push('$cookie = New-Object System.Net.Cookie')
 
-        code.push("$cookie.Name = '%s'", cookie.name)
-        code.push("$cookie.Value = '%s'", cookie.value)
-        code.push("$cookie.Domain = '%s'", source.uriObj.host)
+        code.push("$cookie.Name = '%s'", psSqEscape(cookie.name))
+        code.push("$cookie.Value = '%s'", psSqEscape(cookie.value))
+        code.push("$cookie.Domain = '%s'", psSqEscape(source.uriObj.host))
 
         code.push('$session.Cookies.Add($cookie)')
       })
@@ -46,11 +56,22 @@ module.exports = function (command) {
     }
 
     if (source.postData.text) {
-      commandOptions.push("-ContentType '" + helpers.getHeader(source.allHeaders, 'content-type') + "'")
-      commandOptions.push("-Body '" + source.postData.text + "'")
+      const contentType = helpers.getHeader(source.allHeaders, 'content-type')
+      if (contentType) {
+        commandOptions.push("-ContentType '" + psSqEscape(contentType) + "'")
+      }
+
+      commandOptions.push(
+        "-Body '" + psSqEscape(source.postData.text) + "'"
+      )
     }
 
-    code.push("$response = %s -Uri '%s' -Method %s %s", command, source.fullUrl, source.method, commandOptions.join(' '))
+    code.push("$response = %s -Uri '%s' -Method %s %s",
+      command,
+      psSqEscape(source.fullUrl),
+      source.method,
+      commandOptions.join(' ')
+    )
     return code.join()
   }
 }
