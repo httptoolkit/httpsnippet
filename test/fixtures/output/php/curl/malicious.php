@@ -12,6 +12,11 @@ curl_setopt_array($curl, [
   CURLOPT_CUSTOMREQUEST => "POST",
   CURLOPT_POSTFIELDS => "' \" ` $( #{ %( %{ {{ \\0 %s \\",
   CURLOPT_HTTPHEADER => [
+    "#: hash-key-test",
+    "$: dollar-key-test",
+    "%: percent-key-test",
+    "': squote-key-test",
+    "`: backtick-key-test",
     "backtick-value-test: `",
     "dollar-parenthesis-value-test: $(",
     "double-brace-value-test: {{",

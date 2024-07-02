@@ -1,10 +1,15 @@
 wget --quiet \
   --method POST \
+  --header ''\'': squote-key-test' \
   --header 'squote-value-test: '\''' \
   --header 'dquote-value-test: "' \
+  --header '`: backtick-key-test' \
   --header 'backtick-value-test: `' \
+  --header '$: dollar-key-test' \
   --header 'dollar-parenthesis-value-test: $(' \
+  --header '#: hash-key-test' \
   --header 'hash-brace-value-test: #{' \
+  --header '%: percent-key-test' \
   --header 'percent-parenthesis-value-test: %(' \
   --header 'percent-brace-value-test: %{' \
   --header 'double-brace-value-test: {{' \

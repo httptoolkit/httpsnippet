@@ -1,10 +1,15 @@
 #import <Foundation/Foundation.h>
 
-NSDictionary *headers = @{ @"squote-value-test": @"'",
+NSDictionary *headers = @{ @"'": @"squote-key-test",
+                           @"squote-value-test": @"'",
                            @"dquote-value-test": @"\"",
+                           @"`": @"backtick-key-test",
                            @"backtick-value-test": @"`",
+                           @"$": @"dollar-key-test",
                            @"dollar-parenthesis-value-test": @"$(",
+                           @"#": @"hash-key-test",
                            @"hash-brace-value-test": @"#{",
+                           @"%": @"percent-key-test",
                            @"percent-parenthesis-value-test": @"%(",
                            @"percent-brace-value-test": @"%{",
                            @"double-brace-value-test": @"{{",

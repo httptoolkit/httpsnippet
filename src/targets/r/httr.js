@@ -106,7 +106,12 @@ module.exports = function (source, options) {
   const otherHeaders = Object.entries(source.allHeaders)
     // These headers are all handled separately:
     .filter(([key]) => !['cookie', 'accept', 'content-type'].includes(key.toLowerCase()))
-    .map(([key, value]) => `${key.replace(/-/g, '_')} = '${escape(value, { delimiter: "'" })}'`)
+    .map(([key, value]) => {
+      const safeKey = key.match(/^[a-zA-Z][a-zA-Z0-9_.-]*$/)
+        ? key.replace(/-/g, '_')
+        : '"' + escape(key) + '"'
+      return `${safeKey} = '${escape(value, { delimiter: "'" })}'`
+    })
     .join(', ')
 
   const setHeaders = otherHeaders

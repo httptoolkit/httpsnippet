@@ -93,6 +93,10 @@
     ],
     "headers": [
       {
+        "name": "'",
+        "value": "squote-key-test"
+      },
+      {
         "name": "squote-value-test",
         "value": "'"
       },
@@ -101,16 +105,32 @@
         "value": "\""
       },
       {
+        "name": "`",
+        "value": "backtick-key-test"
+      },
+      {
         "name": "backtick-value-test",
         "value": "`"
+      },
+      {
+        "name": "$",
+        "value": "dollar-key-test"
       },
       {
         "name": "dollar-parenthesis-value-test",
         "value": "$("
       },
       {
+        "name": "#",
+        "value": "hash-key-test"
+      },
+      {
         "name": "hash-brace-value-test",
         "value": "#{"
+      },
+      {
+        "name": "%",
+        "value": "percent-key-test"
       },
       {
         "name": "percent-parenthesis-value-test",

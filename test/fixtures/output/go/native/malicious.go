@@ -15,11 +15,16 @@ func main() {
 
 	req, _ := http.NewRequest("POST", url, payload)
 
+	req.Header.Add("'", "squote-key-test")
 	req.Header.Add("squote-value-test", "'")
 	req.Header.Add("dquote-value-test", "\"")
+	req.Header.Add("`", "backtick-key-test")
 	req.Header.Add("backtick-value-test", "`")
+	req.Header.Add("$", "dollar-key-test")
 	req.Header.Add("dollar-parenthesis-value-test", "$(")
+	req.Header.Add("#", "hash-key-test")
 	req.Header.Add("hash-brace-value-test", "#{")
+	req.Header.Add("%", "percent-key-test")
 	req.Header.Add("percent-parenthesis-value-test", "%(")
 	req.Header.Add("percent-brace-value-test", "%{")
 	req.Header.Add("double-brace-value-test", "{{")

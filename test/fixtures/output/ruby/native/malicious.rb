@@ -6,11 +6,16 @@ url = URI("http://example.test/%27%22%60$(%(%%7B%7B%7B/0%s//?'=squote-key-test&s
 http = Net::HTTP.new(url.host, url.port)
 
 request = Net::HTTP::Post.new(url)
+request["'"] = 'squote-key-test'
 request["squote-value-test"] = '\''
 request["dquote-value-test"] = '"'
+request["`"] = 'backtick-key-test'
 request["backtick-value-test"] = '`'
+request["$"] = 'dollar-key-test'
 request["dollar-parenthesis-value-test"] = '$('
+request["#"] = 'hash-key-test'
 request["hash-brace-value-test"] = '#{'
+request["%"] = 'percent-key-test'
 request["percent-parenthesis-value-test"] = '%('
 request["percent-brace-value-test"] = '%{'
 request["double-brace-value-test"] = '{{'

@@ -90,7 +90,7 @@ module.exports = function (source, options) {
 
   // construct headers
   Object.keys(source.allHeaders).sort().forEach(function (key) {
-    code.push('%s:%s', key, shell.quote(source.allHeaders[key]))
+    code.push('%s:%s', shell.quote(key), shell.quote(source.allHeaders[key]))
   })
 
   if (source.postData.mimeType === 'application/x-www-form-urlencoded') {
@@ -109,7 +109,12 @@ module.exports = function (source, options) {
   code.unshift('http %s%s %s', flags.length ? flags.join(' ') + ' ' : '', source.method, shell.quote(opts.queryParams ? source.url : source.fullUrl))
 
   if (raw && source.postData.text) {
-    code.unshift('echo %s | ', shell.quote(source.postData.text))
+    if (source.postData.text.includes('\\')) {
+      // Printf handles escape characters more clearly & portably than echo
+      code.unshift("printf '%%s' %s | ", shell.quote(source.postData.text))
+    } else {
+      code.unshift('echo %s | ', shell.quote(source.postData.text))
+    }
   }
 
   return code.join()

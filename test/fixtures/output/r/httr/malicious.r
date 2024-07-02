@@ -31,6 +31,6 @@ payload <- "' \" ` $( #{ %( %{ {{ \\0 %s \\"
 
 encode <- "raw"
 
-response <- VERB("POST", url, body = payload, query = queryString, add_headers(squote_value_test = '\'', dquote_value_test = '"', backtick_value_test = '`', dollar_parenthesis_value_test = '$(', hash_brace_value_test = '#{', percent_parenthesis_value_test = '%(', percent_brace_value_test = '%{', double_brace_value_test = '{{', null_value_test = '\\0', string_fmt_value_test = '%s', slash_value_test = '\\'), content_type("text/plain"), encode = encode)
+response <- VERB("POST", url, body = payload, query = queryString, add_headers("'" = 'squote-key-test', squote_value_test = '\'', dquote_value_test = '"', "`" = 'backtick-key-test', backtick_value_test = '`', "$" = 'dollar-key-test', dollar_parenthesis_value_test = '$(', "#" = 'hash-key-test', hash_brace_value_test = '#{', "%" = 'percent-key-test', percent_parenthesis_value_test = '%(', percent_brace_value_test = '%{', double_brace_value_test = '{{', null_value_test = '\\0', string_fmt_value_test = '%s', slash_value_test = '\\'), content_type("text/plain"), encode = encode)
 
 content(response, "text")
