@@ -219,20 +219,29 @@ HTTPSnippet.prototype.prepare = function (request) {
   // merge all possible queryString values
   request.queryObj = Object.assign(request.queryObj, request.uriObj.query)
 
-  // reset uriObj values for a clean url
-  request.uriObj.query = null
-  request.uriObj.search = null
-  request.uriObj.path = request.uriObj.pathname
+  // In some cases (unparseable query - preference to use raw in exporter) the queryString might
+  // be empty while the URL search is not. In that case, we prefer the URL search.
+  const hasQueryObj = Object.keys(request.queryObj).length > 0
+  if (hasQueryObj || !request.uriObj.search) {
+    // reset uriObj values for a clean url
+    request.uriObj.query = null
+    request.uriObj.search = null
+    request.uriObj.path = request.uriObj.pathname
 
-  // keep the base url clean of queryString
-  request.url = url.format(request.uriObj)
+    // keep the base url clean of queryString
+    request.url = url.format(request.uriObj)
 
-  // update the uri object
-  request.uriObj.query = request.queryObj
-  request.uriObj.search = qs.stringify(request.queryObj)
+    // update the uri object
+    request.uriObj.query = request.queryObj
+    request.uriObj.search = qs.stringify(request.queryObj)
 
-  if (request.uriObj.search) {
-    request.uriObj.path = request.uriObj.pathname + '?' + request.uriObj.search
+    if (request.uriObj.search) {
+      request.uriObj.path = request.uriObj.pathname + '?' + request.uriObj.search
+    }
+  } else {
+    // We have no request.queryObj (so snippets won't send query params in a structured way)
+    // We keep the queryString in request.url (so it's sent raw everywhere)
+    // request.fullUrl is recreated below (maybe mild fixed?) but preserves raw search etc
   }
 
   // construct a full url

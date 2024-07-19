@@ -1,0 +1,6 @@
+{
+  "method": "GET",
+  "url": "http://mockbin.com/har?&&&",
+  "httpVersion": "HTTP/1.1",
+  "queryString": []
+}
