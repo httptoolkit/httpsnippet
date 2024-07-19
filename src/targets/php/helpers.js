@@ -1,6 +1,7 @@
 'use strict'
 
-const { escape } = require('../../helpers/format')
+// PHP single quotes are super simple - all escapes ignored except sq & slash
+const phpSqEscape = val => val.replace(/\\/g, '\\\\').replace(/'/g, "\\'")
 
 const convert = function (obj, indent, lastIndent) {
   let i, result
@@ -19,7 +20,7 @@ const convert = function (obj, indent, lastIndent) {
       break
 
     case '[object String]':
-      result = "'" + escape(obj, { delimiter: "'", escapeNewlines: false }) + "'"
+      result = "'" + phpSqEscape(obj) + "'"
       break
 
     case '[object Number]':
@@ -55,6 +56,7 @@ const convert = function (obj, indent, lastIndent) {
 }
 
 module.exports = {
+  phpSqEscape: phpSqEscape,
   convert: convert,
   methods: [
     'ACL',

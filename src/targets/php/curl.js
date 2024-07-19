@@ -12,6 +12,7 @@
 
 const { format } = require('../../helpers/format')
 const CodeBuilder = require('../../helpers/code-builder')
+const { phpSqEscape } = require('./helpers')
 
 module.exports = function (source, options) {
   const opts = Object.assign({
@@ -78,7 +79,16 @@ module.exports = function (source, options) {
 
   curlOptions.forEach(function (option) {
     if (!~[null, undefined].indexOf(option.value)) {
-      curlopts.push(format('%s => %s,', option.name, option.escape ? JSON.stringify(option.value) : option.value))
+      curlopts.push(
+        format('%s => %s,',
+          option.name,
+          option.escape && typeof option.value === 'string'
+            ? `'${phpSqEscape(option.value)}'`
+            : option.escape
+              ? JSON.stringify(option.value)
+              : option.value
+        )
+      )
     }
   })
 
@@ -88,12 +98,12 @@ module.exports = function (source, options) {
   })
 
   if (cookies.length) {
-    curlopts.push(format('CURLOPT_COOKIE => "%s",', cookies.join('; ')))
+    curlopts.push(format("CURLOPT_COOKIE => '%s'", phpSqEscape(cookies.join('; '))))
   }
 
   // construct cookies
   const headers = Object.keys(source.headersObj).sort().map(function (key) {
-    return format('"%s: %qd"', key, source.headersObj[key])
+    return format("'%s: %s'", phpSqEscape(key), phpSqEscape(source.headersObj[key]))
   })
 
   if (headers.length) {
@@ -113,9 +123,9 @@ module.exports = function (source, options) {
     .push('if ($err) {')
 
   if (opts.namedErrors) {
-    code.push(1, 'echo array_flip(get_defined_constants(true)["curl"])[$err];')
+    code.push(1, "echo array_flip(get_defined_constants(true)['curl'])[$err];")
   } else {
-    code.push(1, 'echo "cURL Error #:" . $err;')
+    code.push(1, "echo 'cURL Error #:' . $err;")
   }
 
   code.push('} else {')
