@@ -1,6 +1,6 @@
 import requests
 
-url = "http://mockbin.com/har?&&&"
+url = "http://mockbin.com/har?&&a=b&&"
 
 response = requests.get(url)
 

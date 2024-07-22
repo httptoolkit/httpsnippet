@@ -1,7 +1,7 @@
 const settings = {
   "async": true,
   "crossDomain": true,
-  "url": "http://mockbin.com/har?&&&",
+  "url": "http://mockbin.com/har?&&a=b&&",
   "method": "GET",
   "headers": {}
 };

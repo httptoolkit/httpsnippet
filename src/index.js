@@ -216,13 +216,16 @@ HTTPSnippet.prototype.prepare = function (request) {
   // eslint-disable-next-line node/no-deprecated-api
   request.uriObj = url.parse(request.url, true, true)
 
-  // merge all possible queryString values
-  request.queryObj = Object.assign(request.queryObj, request.uriObj.query)
+  // In some cases (unparseable/partially parseable query string) we want to fully preserve the
+  // original string (as it may not follow qs conventions at all). We assume any scenario where
+  // qs cannot reproduce the original value is this case.
+  const simpleQueryString = !request.uriObj.search ||
+    (qs.stringify(request.uriObj.query) === request.uriObj.search.slice(1))
 
-  // In some cases (unparseable query - preference to use raw in exporter) the queryString might
-  // be empty while the URL search is not. In that case, we prefer the URL search.
-  const hasQueryObj = Object.keys(request.queryObj).length > 0
-  if (hasQueryObj || !request.uriObj.search) {
+  if (simpleQueryString) {
+    // merge all possible queryString values
+    request.queryObj = Object.assign(request.queryObj, request.uriObj.query)
+
     // reset uriObj values for a clean url
     request.uriObj.query = null
     request.uriObj.search = null

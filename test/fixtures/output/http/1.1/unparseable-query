@@ -1,2 +1,2 @@
-GET /har?&&& HTTP/1.1
+GET /har?&&a=b&& HTTP/1.1
 Host: mockbin.com

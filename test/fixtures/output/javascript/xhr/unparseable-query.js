@@ -9,6 +9,6 @@ xhr.addEventListener("readystatechange", function () {
   }
 });
 
-xhr.open("GET", "http://mockbin.com/har?&&&");
+xhr.open("GET", "http://mockbin.com/har?&&a=b&&");
 
 xhr.send(data);

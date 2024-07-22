@@ -4,7 +4,7 @@ const options = {
   "method": "GET",
   "hostname": "mockbin.com",
   "port": null,
-  "path": "/har?&&&",
+  "path": "/har?&&a=b&&",
   "headers": {}
 };
 

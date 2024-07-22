@@ -1,1 +1,1 @@
-http GET 'http://mockbin.com/har?&&&'
+http GET 'http://mockbin.com/har?&&a=b&&'
