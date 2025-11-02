@@ -40,6 +40,16 @@ Currently the following output targets are supported:
 | --------- | ------- | -------------------------------- |
 | `indent`  | `  `    | line break & indent output value |
 
+### [RestClient](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/client/RestClient.html)
+
+> Spring Framework REST client
+
+###### Options
+
+| Option    | Default | Description                      |
+| --------- | ------- | -------------------------------- |
+| `indent`  | `  `    | line break & indent output value |
+
 ----
 
 ## JavaScript

@@ -226,6 +226,12 @@
         "title": "java.net.http",
         "link": "https://openjdk.java.net/groups/net/httpclient/intro.html",
         "description": "Java Standardized HTTP Client API"
+      },
+      {
+        "key": "restclient",
+        "title": "Spring RestClient",
+        "link": "https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/client/RestClient.html",
+        "description": "Spring Framework REST client"
       }
     ]
   },
