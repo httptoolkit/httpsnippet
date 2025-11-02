@@ -47,7 +47,8 @@ const standardMediaTypes = {
 
 module.exports = function (source, options) {
   const opts = Object.assign({
-    indent: '  '
+    indent: '  ',
+    entityClass: 'String'
   }, options)
 
   const code = new CodeBuilder(opts.indent)
@@ -55,7 +56,7 @@ module.exports = function (source, options) {
   code.push('RestClient restClient = RestClient.create();')
     .blank()
 
-  code.push('ResponseEntity<String> response = restClient')
+  code.push('ResponseEntity<%s> response = restClient', opts.entityClass)
 
   if (standardMethods.includes(source.method.toUpperCase())) {
     code.push(1, '.method(HttpMethod.%s)', source.method.toUpperCase())
@@ -108,7 +109,7 @@ module.exports = function (source, options) {
   }
 
   code.push(1, '.retrieve()')
-  code.push(1, '.toEntity(String.class);')
+  code.push(1, '.toEntity(%s.class);', opts.entityClass)
 
   return code.join()
 }
