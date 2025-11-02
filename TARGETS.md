@@ -46,9 +46,10 @@ Currently the following output targets are supported:
 
 ###### Options
 
-| Option    | Default | Description                      |
-| --------- | ------- | -------------------------------- |
-| `indent`  | `  `    | line break & indent output value |
+| Option       | Default  | Description                      |
+| ------------ | -------- | -------------------------------- |
+| `indent`     | `  `     | line break & indent output value |
+| `entityType` | `String` | Java type for the entity         |
 
 ----
 

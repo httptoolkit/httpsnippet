@@ -60,7 +60,7 @@ const multipartMimeTypes = [
 module.exports = function (source, options) {
   const opts = Object.assign({
     indent: '  ',
-    entityClass: 'String'
+    entityType: 'String'
   }, options)
 
   const code = new CodeBuilder(opts.indent)
@@ -105,7 +105,7 @@ module.exports = function (source, options) {
     code.blank()
   }
 
-  code.push('ResponseEntity<%s> response = restClient', opts.entityClass)
+  code.push('ResponseEntity<%s> response = restClient', opts.entityType)
 
   if (standardMethods.includes(source.method.toUpperCase())) {
     code.push(1, '.method(HttpMethod.%s)', source.method.toUpperCase())
@@ -167,7 +167,7 @@ module.exports = function (source, options) {
   }
 
   code.push(1, '.retrieve()')
-  code.push(1, '.toEntity(%s.class);', opts.entityClass)
+  code.push(1, '.toEntity(%s.class);', opts.entityType)
 
   return code.join()
 }
