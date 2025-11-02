@@ -1,5 +1,8 @@
 RestClient restClient = RestClient.create();
 
+MultiValueMap<String, String> formDataMap = new LinkedMultiValueMap<>();
+formDataMap.add("foo", "bar");
+
 ResponseEntity<String> response = restClient
   .method(HttpMethod.POST)
   .uri("http://mockbin.com/har", uriBuilder -> {
@@ -12,8 +15,7 @@ ResponseEntity<String> response = restClient
   .cookie("foo", "bar")
   .cookie("bar", "baz")
   .header("accept", "application/json")
-  .header("content-type", "application/x-www-form-urlencoded")
   .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-  .body("foo=bar")
+  .body(formDataMap)
   .retrieve()
   .toEntity(String.class);

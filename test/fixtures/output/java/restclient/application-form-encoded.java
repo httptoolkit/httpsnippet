@@ -1,10 +1,13 @@
 RestClient restClient = RestClient.create();
 
+MultiValueMap<String, String> formDataMap = new LinkedMultiValueMap<>();
+formDataMap.add("foo", "bar");
+formDataMap.add("hello", "world");
+
 ResponseEntity<String> response = restClient
   .method(HttpMethod.POST)
   .uri("http://mockbin.com/har")
-  .header("content-type", "application/x-www-form-urlencoded")
   .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-  .body("foo=bar&hello=world")
+  .body(formDataMap)
   .retrieve()
   .toEntity(String.class);

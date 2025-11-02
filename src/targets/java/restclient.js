@@ -12,10 +12,8 @@
 
 const CodeBuilder = require('../../helpers/code-builder')
 
-// Based off org.springframework.http.HttpMethod
 const standardMethods = ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'TRACE']
 
-// Based off org.springframework.http.MediaType
 const standardMediaTypes = {
   'application/atom+xml': 'APPLICATION_ATOM_XML',
   'application/cbor': 'APPLICATION_CBOR',
@@ -45,6 +43,20 @@ const standardMediaTypes = {
   'text/xml': 'TEXT_XML'
 }
 
+const jsonMimeTypes = [
+  'application/json',
+  'text/json',
+  'text/x-json',
+  'application/x-json'
+]
+
+const multipartMimeTypes = [
+  'multipart/form-data',
+  'multipart/mixed',
+  'multipart/related',
+  'multipart/alternative'
+]
+
 module.exports = function (source, options) {
   const opts = Object.assign({
     indent: '  ',
@@ -55,6 +67,43 @@ module.exports = function (source, options) {
 
   code.push('RestClient restClient = RestClient.create();')
     .blank()
+
+  if (source.postData && source.postData.mimeType === 'application/x-www-form-urlencoded' && source.postData.params) {
+    code.push('MultiValueMap<String, String> formDataMap = new LinkedMultiValueMap<>();')
+    source.postData.params.forEach(function (param) {
+      code.push('formDataMap.add("%qd", "%qd");', param.name, param.value)
+    })
+    code.blank()
+  }
+
+  if (source.postData && multipartMimeTypes.includes(source.postData.mimeType) && source.postData.params) {
+    code.push('MultipartBodyBuilder multipartBuilder = new MultipartBodyBuilder();')
+
+    source.postData.params.forEach(function (param) {
+      if (param.fileName) {
+        if (param.value) {
+          code.push('multipartBuilder.part("%s", "%qd")', param.name, param.value)
+          code.push(1, '.filename("%s")', param.fileName)
+        } else {
+          code.push('multipartBuilder.part("%s", new FileSystemResource("%s"))', param.name, param.fileName)
+        }
+
+        if (param.contentType) {
+          const mediaTypeConstant = standardMediaTypes[param.contentType]
+          if (mediaTypeConstant) {
+            code.push(1, '.contentType(MediaType.%s);', mediaTypeConstant)
+          } else {
+            code.push(1, '.contentType(MediaType.parseMediaType("%s"));', param.contentType)
+          }
+        } else {
+          code.push(1, ';')
+        }
+      } else {
+        code.push('multipartBuilder.part("%s", "%qd");', param.name, param.value || '')
+      }
+    })
+    code.blank()
+  }
 
   code.push('ResponseEntity<%s> response = restClient', opts.entityClass)
 
@@ -91,21 +140,30 @@ module.exports = function (source, options) {
   const headers = Object.keys(source.headersObj)
   if (headers.length) {
     headers.forEach(function (key) {
-      code.push(1, '.header("%s", "%qd")', key, source.headersObj[key])
+      if (key.toLowerCase() !== 'content-type') {
+        code.push(1, '.header("%s", "%qd")', key, source.headersObj[key])
+      }
     })
   }
 
-  if (source.postData && source.postData.text) {
-    if (source.postData.mimeType) {
-      const mappedEnumConst = standardMediaTypes[source.postData.mimeType]
-      if (mappedEnumConst) {
-        code.push(1, '.contentType(MediaType.%s)', mappedEnumConst)
-      } else {
-        code.push(1, '.contentType(MediaType.parseMediaType("%s"))', source.postData.mimeType)
-      }
+  if (source.postData && (source.postData.params || source.postData.text)) {
+    const mediaTypeEnumConstant = standardMediaTypes[source.postData.mimeType]
+
+    if (mediaTypeEnumConstant) {
+      code.push(1, '.contentType(MediaType.%s)', mediaTypeEnumConstant)
+    } else {
+      code.push(1, '.contentType(MediaType.parseMediaType("%s"))', source.postData.mimeType)
     }
 
-    code.push(1, '.body(%s)', JSON.stringify(source.postData.text))
+    if (source.postData.mimeType === 'application/x-www-form-urlencoded' && source.postData.params) {
+      code.push(1, '.body(formDataMap)')
+    } else if (multipartMimeTypes.includes(source.postData.mimeType) && source.postData.params) {
+      code.push(1, '.body(multipartBuilder.build())')
+    } else if (source.postData.text) {
+      code.push(1, '.body(%s)', JSON.stringify(source.postData.text))
+    } else if (source.postData.jsonObj && jsonMimeTypes.includes(source.postData.mimeType)) {
+      code.push(1, '.body(%s)', JSON.stringify(JSON.stringify(source.postData.jsonObj)))
+    }
   }
 
   code.push(1, '.retrieve()')
