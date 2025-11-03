@@ -121,16 +121,15 @@ module.exports = function (source, options) {
 
   if (Object.keys(source.queryObj).length) {
     code.push(1, '.uri("%s", uriBuilder -> {', source.url)
+
     Object.keys(source.queryObj).forEach(function (key) {
       const value = source.queryObj[key]
-      if (Array.isArray(value)) {
-        value.forEach(function (val) {
-          code.push(2, 'uriBuilder.queryParam("%qd", "%qd");', key, val)
-        })
-      } else {
-        code.push(2, 'uriBuilder.queryParam("%qd", "%qd");', key, value)
-      }
+      const iterable = Array.isArray(value) ? value : [value]
+      iterable.forEach(function (val) {
+        code.push(2, 'uriBuilder.queryParam("%qd", "%qd");', key, val)
+      })
     })
+
     code.push(2, 'return uriBuilder.build();')
     code.push(1, '})')
   } else {
