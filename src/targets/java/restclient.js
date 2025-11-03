@@ -43,13 +43,6 @@ const standardMediaTypes = {
   'text/xml': 'TEXT_XML'
 }
 
-const jsonMimeTypes = [
-  'application/json',
-  'text/json',
-  'text/x-json',
-  'application/x-json'
-]
-
 const multipartMimeTypes = [
   'multipart/form-data',
   'multipart/mixed',
@@ -63,46 +56,59 @@ module.exports = function (source, options) {
     entityType: 'String'
   }, options)
 
+  const state = {
+    bodyType: null
+  }
+
   const code = new CodeBuilder(opts.indent)
 
   code.push('RestClient restClient = RestClient.create();')
     .blank()
 
-  if (source.postData && source.postData.mimeType === 'application/x-www-form-urlencoded' && source.postData.params) {
-    code.push('MultiValueMap<String, String> formDataMap = new LinkedMultiValueMap<>();')
-    source.postData.params.forEach(function (param) {
-      code.push('formDataMap.add("%qd", "%qd");', param.name, param.value)
-    })
-    code.blank()
-  }
+  if (source.postData) {
+    if (source.postData.params && source.postData.mimeType === 'application/x-www-form-urlencoded') {
+      state.bodyType = 'form'
 
-  if (source.postData && multipartMimeTypes.includes(source.postData.mimeType) && source.postData.params) {
-    code.push('MultipartBodyBuilder multipartBuilder = new MultipartBodyBuilder();')
+      code.push('MultiValueMap<String, String> formDataMap = new LinkedMultiValueMap<>();')
 
-    source.postData.params.forEach(function (param) {
-      if (param.fileName) {
-        if (param.value) {
-          code.push('multipartBuilder.part("%s", "%qd")', param.name, param.value)
-          code.push(1, '.filename("%s")', param.fileName)
-        } else {
-          code.push('multipartBuilder.part("%s", new FileSystemResource("%s"))', param.name, param.fileName)
-        }
+      source.postData.params.forEach(function (param) {
+        code.push('formDataMap.add("%qd", "%qd");', param.name, param.value)
+      })
 
-        if (param.contentType) {
-          const mediaTypeConstant = standardMediaTypes[param.contentType]
-          if (mediaTypeConstant) {
-            code.push(1, '.contentType(MediaType.%s);', mediaTypeConstant)
+      code.blank()
+    } else if (source.postData.params && multipartMimeTypes.includes(source.postData.mimeType)) {
+      state.bodyType = 'multipart'
+
+      code.push('MultipartBodyBuilder multipartBuilder = new MultipartBodyBuilder();')
+
+      source.postData.params.forEach(function (param) {
+        if (param.fileName) {
+          if (param.value) {
+            code.push('multipartBuilder.part("%s", "%qd")', param.name, param.value)
+            code.push(1, '.filename("%s")', param.fileName)
           } else {
-            code.push(1, '.contentType(MediaType.parseMediaType("%s"));', param.contentType)
+            code.push('multipartBuilder.part("%s", new FileSystemResource("%s"))', param.name, param.fileName)
+          }
+
+          if (param.contentType) {
+            const mediaTypeConstant = standardMediaTypes[param.contentType]
+            if (mediaTypeConstant) {
+              code.push(1, '.contentType(MediaType.%s);', mediaTypeConstant)
+            } else {
+              code.push(1, '.contentType(MediaType.parseMediaType("%s"));', param.contentType)
+            }
+          } else {
+            code.push(1, ';')
           }
         } else {
-          code.push(1, ';')
+          code.push('multipartBuilder.part("%s", "%qd");', param.name, param.value || '')
         }
-      } else {
-        code.push('multipartBuilder.part("%s", "%qd");', param.name, param.value || '')
-      }
-    })
-    code.blank()
+      })
+
+      code.blank()
+    } else if (source.postData.text) {
+      state.bodyType = 'plaintext'
+    }
   }
 
   code.push('ResponseEntity<%s> response = restClient', opts.entityType)
@@ -146,23 +152,22 @@ module.exports = function (source, options) {
     })
   }
 
-  if (source.postData && (source.postData.params || source.postData.text)) {
-    const mediaTypeEnumConstant = standardMediaTypes[source.postData.mimeType]
-
-    if (mediaTypeEnumConstant) {
-      code.push(1, '.contentType(MediaType.%s)', mediaTypeEnumConstant)
-    } else {
-      code.push(1, '.contentType(MediaType.parseMediaType("%s"))', source.postData.mimeType)
+  if (source.postData && state.bodyType) {
+    if (source.postData.mimeType) {
+      const mediaTypeEnumConstant = standardMediaTypes[source.postData.mimeType]
+      if (mediaTypeEnumConstant) {
+        code.push(1, '.contentType(MediaType.%s)', mediaTypeEnumConstant)
+      } else {
+        code.push(1, '.contentType(MediaType.parseMediaType("%s"))', source.postData.mimeType)
+      }
     }
 
-    if (source.postData.mimeType === 'application/x-www-form-urlencoded' && source.postData.params) {
+    if (state.bodyType === 'form') {
       code.push(1, '.body(formDataMap)')
-    } else if (multipartMimeTypes.includes(source.postData.mimeType) && source.postData.params) {
+    } else if (state.bodyType === 'multipart') {
       code.push(1, '.body(multipartBuilder.build())')
-    } else if (source.postData.text) {
-      code.push(1, '.body(%s)', JSON.stringify(source.postData.text))
-    } else if (source.postData.jsonObj && jsonMimeTypes.includes(source.postData.mimeType)) {
-      code.push(1, '.body(%s)', JSON.stringify(JSON.stringify(source.postData.jsonObj)))
+    } else if (state.bodyType === 'plaintext') {
+      code.push(1, '.body("%qd")', source.postData.text)
     }
   }
 
