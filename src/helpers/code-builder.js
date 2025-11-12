@@ -94,6 +94,18 @@ CodeBuilder.prototype.blank = function () {
 }
 
 /**
+ * Add the line to the end of the last line. Creates a new line
+ * if no lines exist yet.
+ */
+CodeBuilder.prototype.pushToLast = function (line) {
+  if (!this.code) {
+    this.push(line)
+  }
+  const updatedLine = `${this.code[this.code.length - 1]}${line}`
+  this.code[this.code.length - 1] = updatedLine
+}
+
+/**
  * Concatenate all current lines using the given lineJoin
  * @return {string}
  */

@@ -1,27 +1,175 @@
 [
   {
-    "key": "shell",
-    "title": "Shell",
-    "extname": ".sh",
-    "default": "curl",
+    "key": "c",
+    "title": "C",
+    "extname": ".c",
+    "default": "libcurl",
     "clients": [
       {
-        "key": "curl",
-        "title": "cURL",
-        "link": "http://curl.haxx.se/",
-        "description": "cURL is a command line tool and library for transferring data with URL syntax"
+        "key": "libcurl",
+        "title": "Libcurl",
+        "link": "http://curl.haxx.se/libcurl/",
+        "description": "Simple REST and HTTP API Client for C"
+      }
+    ]
+  },
+  {
+    "key": "clojure",
+    "title": "Clojure",
+    "extname": ".clj",
+    "default": "clj_http",
+    "clients": [
+      {
+        "key": "clj_http",
+        "title": "clj-http",
+        "link": "https://github.com/dakrone/clj-http",
+        "description": "An idiomatic clojure http client wrapping the apache client."
+      }
+    ]
+  },
+  {
+    "key": "crystal",
+    "title": "Crystal",
+    "extname": ".cr",
+    "default": "native",
+    "clients": [
+      {
+        "key": "native",
+        "title": "http::client",
+        "link": "https://crystal-lang.org/api/master/HTTP/Client.html",
+        "description": "Crystal HTTP client"
+      }
+    ]
+  },
+  {
+    "key": "csharp",
+    "title": "C#",
+    "extname": ".cs",
+    "default": "restsharp",
+    "clients": [
+      {
+        "key": "restsharp",
+        "title": "RestSharp",
+        "link": "http://restsharp.org/",
+        "description": "Simple REST and HTTP API Client for .NET"
       },
       {
-        "key": "httpie",
-        "title": "HTTPie",
-        "link": "http://httpie.org/",
-        "description": "a CLI, cURL-like tool for humans"
+        "key": "httpclient",
+        "title": "HttpClient",
+        "link": "https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient",
+        "description": ".NET Standard HTTP Client"
+      }
+    ]
+  },
+  {
+    "key": "go",
+    "title": "Go",
+    "extname": ".go",
+    "default": "native",
+    "clients": [
+      {
+        "key": "native",
+        "title": "NewRequest",
+        "link": "http://golang.org/pkg/net/http/#NewRequest",
+        "description": "Golang HTTP client request"
+      }
+    ]
+  },
+  {
+    "key": "http",
+    "title": "HTTP",
+    "extname": "",
+    "default": "1.1",
+    "clients": [
+      {
+        "key": "1.1",
+        "title": "HTTP/1.1",
+        "link": "https://tools.ietf.org/html/rfc7230",
+        "description": "HTTP/1.1 request string in accordance with RFC 7230"
+      }
+    ]
+  },
+  {
+    "key": "java",
+    "title": "Java",
+    "extname": ".java",
+    "default": "unirest",
+    "clients": [
+      {
+        "key": "okhttp",
+        "title": "OkHttp",
+        "link": "http://square.github.io/okhttp/",
+        "description": "An HTTP Request Client Library"
       },
       {
-        "key": "wget",
-        "title": "Wget",
-        "link": "https://www.gnu.org/software/wget/",
-        "description": "a free software package for retrieving files using HTTP, HTTPS"
+        "key": "unirest",
+        "title": "Unirest",
+        "link": "http://unirest.io/java.html",
+        "description": "Lightweight HTTP Request Client Library"
+      },
+      {
+        "key": "asynchttp",
+        "title": "AsyncHttp",
+        "link": "https://github.com/AsyncHttpClient/async-http-client",
+        "description": "Asynchronous Http and WebSocket Client library for Java"
+      },
+      {
+        "key": "nethttp",
+        "title": "java.net.http",
+        "link": "https://openjdk.java.net/groups/net/httpclient/intro.html",
+        "description": "Java Standardized HTTP Client API"
+      },
+      {
+        "key": "restclient",
+        "title": "Spring RestClient",
+        "link": "https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/client/RestClient.html",
+        "description": "Spring Framework REST client"
+      }
+    ]
+  },
+  {
+    "key": "javascript",
+    "title": "JavaScript",
+    "extname": ".js",
+    "default": "xhr",
+    "clients": [
+      {
+        "key": "jquery",
+        "title": "jQuery",
+        "link": "http://api.jquery.com/jquery.ajax/",
+        "description": "Perform an asynchronous HTTP (Ajax) requests with jQuery"
+      },
+      {
+        "key": "fetch",
+        "title": "fetch",
+        "link": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch",
+        "description": "Perform asynchronous HTTP requests with the Fetch API"
+      },
+      {
+        "key": "xhr",
+        "title": "XMLHttpRequest",
+        "link": "https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest",
+        "description": "W3C Standard API that provides scripted client functionality"
+      },
+      {
+        "key": "axios",
+        "title": "Axios",
+        "link": "https://github.com/axios/axios",
+        "description": "Promise based HTTP client for the browser and node.js"
+      }
+    ]
+  },
+  {
+    "key": "kotlin",
+    "title": "Kotlin",
+    "extname": ".kt",
+    "default": "okhttp",
+    "clients": [
+      {
+        "key": "okhttp",
+        "title": "OkHttp",
+        "link": "http://square.github.io/okhttp/",
+        "description": "An HTTP Request Client Library"
       }
     ]
   },
@@ -64,34 +212,16 @@
     ]
   },
   {
-    "key": "javascript",
-    "title": "JavaScript",
-    "extname": ".js",
-    "default": "xhr",
+    "key": "objc",
+    "title": "Objective-C",
+    "extname": ".m",
+    "default": "nsurlsession",
     "clients": [
       {
-        "key": "jquery",
-        "title": "jQuery",
-        "link": "http://api.jquery.com/jquery.ajax/",
-        "description": "Perform an asynchronous HTTP (Ajax) requests with jQuery"
-      },
-      {
-        "key": "fetch",
-        "title": "fetch",
-        "link": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch",
-        "description": "Perform asynchronous HTTP requests with the Fetch API"
-      },
-      {
-        "key": "xhr",
-        "title": "XMLHttpRequest",
-        "link": "https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest",
-        "description": "W3C Standard API that provides scripted client functionality"
-      },
-      {
-        "key": "axios",
-        "title": "Axios",
-        "link": "https://github.com/axios/axios",
-        "description": "Promise based HTTP client for the browser and node.js"
+        "key": "nsurlsession",
+        "title": "NSURLSession",
+        "link": "https://developer.apple.com/library/mac/documentation/Foundation/Reference/NSURLSession_class/index.html",
+        "description": "Foundation's NSURLSession request"
       }
     ]
   },
@@ -136,6 +266,26 @@
     ]
   },
   {
+    "key": "powershell",
+    "title": "Powershell",
+    "extname": ".ps1",
+    "default": "webrequest",
+    "clients": [
+      {
+        "key": "webrequest",
+        "title": "Invoke-WebRequest",
+        "link": "https://docs.microsoft.com/en-us/powershell/module/Microsoft.PowerShell.Utility/Invoke-WebRequest",
+        "description": "Powershell Invoke-WebRequest client"
+      },
+      {
+        "key": "restmethod",
+        "title": "Invoke-RestMethod",
+        "link": "https://docs.microsoft.com/en-us/powershell/module/Microsoft.PowerShell.Utility/Invoke-RestMethod",
+        "description": "Powershell Invoke-RestMethod client"
+      }
+    ]
+  },
+  {
     "key": "python",
     "title": "Python",
     "extname": ".py",
@@ -156,82 +306,16 @@
     ]
   },
   {
-    "key": "objc",
-    "title": "Objective-C",
-    "extname": ".m",
-    "default": "nsurlsession",
+    "key": "r",
+    "title": "R",
+    "extname": ".r",
+    "default": "httr",
     "clients": [
       {
-        "key": "nsurlsession",
-        "title": "NSURLSession",
-        "link": "https://developer.apple.com/library/mac/documentation/Foundation/Reference/NSURLSession_class/index.html",
-        "description": "Foundation's NSURLSession request"
-      }
-    ]
-  },
-  {
-    "key": "swift",
-    "title": "Swift",
-    "extname": ".swift",
-    "default": "nsurlsession",
-    "clients": [
-      {
-        "key": "nsurlsession",
-        "title": "NSURLSession",
-        "link": "https://developer.apple.com/library/mac/documentation/Foundation/Reference/NSURLSession_class/index.html",
-        "description": "Foundation's NSURLSession request"
-      }
-    ]
-  },
-  {
-    "key": "go",
-    "title": "Go",
-    "extname": ".go",
-    "default": "native",
-    "clients": [
-      {
-        "key": "native",
-        "title": "NewRequest",
-        "link": "http://golang.org/pkg/net/http/#NewRequest",
-        "description": "Golang HTTP client request"
-      }
-    ]
-  },
-  {
-    "key": "java",
-    "title": "Java",
-    "extname": ".java",
-    "default": "unirest",
-    "clients": [
-      {
-        "key": "okhttp",
-        "title": "OkHttp",
-        "link": "http://square.github.io/okhttp/",
-        "description": "An HTTP Request Client Library"
-      },
-      {
-        "key": "unirest",
-        "title": "Unirest",
-        "link": "http://unirest.io/java.html",
-        "description": "Lightweight HTTP Request Client Library"
-      },
-      {
-        "key": "asynchttp",
-        "title": "AsyncHttp",
-        "link": "https://github.com/AsyncHttpClient/async-http-client",
-        "description": "Asynchronous Http and WebSocket Client library for Java"
-      },
-      {
-        "key": "nethttp",
-        "title": "java.net.http",
-        "link": "https://openjdk.java.net/groups/net/httpclient/intro.html",
-        "description": "Java Standardized HTTP Client API"
-      },
-      {
-        "key": "restclient",
-        "title": "Spring RestClient",
-        "link": "https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/client/RestClient.html",
-        "description": "Spring Framework REST client"
+        "key": "httr",
+        "title": "httr",
+        "link": "https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html",
+        "description": "httr: Tools for Working with URLs and HTTP"
       }
     ]
   },
@@ -250,126 +334,56 @@
     ]
   },
   {
-    "key": "csharp",
-    "title": "C#",
-    "extname": ".cs",
-    "default": "restsharp",
+    "key": "rust",
+    "title": "Rust",
+    "extname": ".rs",
+    "default": "reqwest",
     "clients": [
       {
-        "key": "restsharp",
-        "title": "RestSharp",
-        "link": "http://restsharp.org/",
-        "description": "Simple REST and HTTP API Client for .NET"
+        "key": "reqwest",
+        "title": "reqwest",
+        "link": "https://docs.rs/reqwest/latest/reqwest/",
+        "description": "reqwest HTTP library"
+      }
+    ]
+  },
+  {
+    "key": "shell",
+    "title": "Shell",
+    "extname": ".sh",
+    "default": "curl",
+    "clients": [
+      {
+        "key": "curl",
+        "title": "cURL",
+        "link": "http://curl.haxx.se/",
+        "description": "cURL is a command line tool and library for transferring data with URL syntax"
       },
       {
-        "key": "httpclient",
-        "title": "HttpClient",
-        "link": "https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient",
-        "description": ".NET Standard HTTP Client"
-      }
-    ]
-  },
-  {
-    "key": "clojure",
-    "title": "Clojure",
-    "extname": ".clj",
-    "default": "clj_http",
-    "clients": [
-      {
-        "key": "clj_http",
-        "title": "clj-http",
-        "link": "https://github.com/dakrone/clj-http",
-        "description": "An idiomatic clojure http client wrapping the apache client."
-      }
-    ]
-  },
-  {
-    "key": "c",
-    "title": "C",
-    "extname": ".c",
-    "default": "libcurl",
-    "clients": [
-      {
-        "key": "libcurl",
-        "title": "Libcurl",
-        "link": "http://curl.haxx.se/libcurl/",
-        "description": "Simple REST and HTTP API Client for C"
-      }
-    ]
-  },
-  {
-    "key": "r",
-    "title": "R",
-    "extname": ".r",
-    "default": "httr",
-    "clients": [
-      {
-        "key": "httr",
-        "title": "httr",
-        "link": "https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html",
-        "description": "httr: Tools for Working with URLs and HTTP"
-      }
-    ]
-  },
-  {
-    "default": "webrequest",
-    "extname": ".ps1",
-    "key": "powershell",
-    "title": "Powershell",
-    "clients": [
-      {
-        "description": "Powershell Invoke-WebRequest client",
-        "key": "webrequest",
-        "link": "https://docs.microsoft.com/en-us/powershell/module/Microsoft.PowerShell.Utility/Invoke-WebRequest",
-        "title": "Invoke-WebRequest"
+        "key": "httpie",
+        "title": "HTTPie",
+        "link": "http://httpie.org/",
+        "description": "a CLI, cURL-like tool for humans"
       },
       {
-        "description": "Powershell Invoke-RestMethod client",
-        "key": "restmethod",
-        "link": "https://docs.microsoft.com/en-us/powershell/module/Microsoft.PowerShell.Utility/Invoke-RestMethod",
-        "title": "Invoke-RestMethod"
+        "key": "wget",
+        "title": "Wget",
+        "link": "https://www.gnu.org/software/wget/",
+        "description": "a free software package for retrieving files using HTTP, HTTPS"
       }
     ]
   },
   {
-    "default": "1.1",
-    "extname": "",
-    "key": "http",
-    "title": "HTTP",
+    "key": "swift",
+    "title": "Swift",
+    "extname": ".swift",
+    "default": "nsurlsession",
     "clients": [
       {
-        "description": "HTTP/1.1 request string in accordance with RFC 7230",
-        "key": "1.1",
-        "link": "https://tools.ietf.org/html/rfc7230",
-        "title": "HTTP/1.1"
-      }
-    ]
-  },
-  {
-    "key": "kotlin",
-    "title": "Kotlin",
-    "extname": ".kt",
-    "default": "okhttp",
-    "clients": [
-      {
-        "key": "okhttp",
-        "title": "OkHttp",
-        "link": "http://square.github.io/okhttp/",
-        "description": "An HTTP Request Client Library"
-      }
-    ]
-  },
-  {
-    "key": "crystal",
-    "title": "Crystal",
-    "extname": ".cr",
-    "default": "native",
-    "clients": [
-      {
-        "key": "native",
-        "title": "http::client",
-        "link": "https://crystal-lang.org/api/master/HTTP/Client.html",
-        "description": "Crystal HTTP client"
+        "key": "nsurlsession",
+        "title": "NSURLSession",
+        "link": "https://developer.apple.com/library/mac/documentation/Foundation/Reference/NSURLSession_class/index.html",
+        "description": "Foundation's NSURLSession request"
       }
     ]
   }
