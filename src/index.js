@@ -34,12 +34,12 @@ const HTTPSnippet = function (data) {
 
   entries.forEach(function (entry) {
     // add optional properties to make validation successful
-    entry.request.httpVersion = entry.request.httpVersion || 'HTTP/1.1'
-    entry.request.queryString = entry.request.queryString || []
-    entry.request.headers = entry.request.headers || []
-    entry.request.cookies = entry.request.cookies || []
-    entry.request.postData = entry.request.postData || {}
-    entry.request.postData.mimeType = entry.request.postData.mimeType || 'application/octet-stream'
+    entry.request.httpVersion ||= 'HTTP/1.1'
+    entry.request.queryString ||= []
+    entry.request.headers ||= []
+    entry.request.cookies ||= []
+    entry.request.postData ||= {}
+    entry.request.postData.mimeType ||= 'application/octet-stream'
 
     entry.request.bodySize = 0
     entry.request.headersSize = 0
