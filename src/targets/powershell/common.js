@@ -14,11 +14,19 @@ const psSqEscape = function (input) {
 module.exports = function (command) {
   return function (source, options) {
     const code = new CodeBuilder()
-    const methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS']
-
-    if (methods.indexOf(source.method.toUpperCase()) === -1) {
-      return 'Method not supported'
-    }
+    const methods = [
+      'DEFAULT',
+      'DELETE',
+      'GET',
+      'HEAD',
+      'MERGE',
+      'OPTIONS',
+      'PATCH',
+      'POST',
+      'PUT',
+      'TRACE'
+    ]
+    const methodArg = methods.includes(source.method.toUpperCase()) ? '-Method' : '-CustomMethod'
 
     const commandOptions = []
 
@@ -66,9 +74,10 @@ module.exports = function (command) {
       )
     }
 
-    code.push("$response = %s -Uri '%s' -Method %s %s",
+    code.push("$response = %s -Uri '%s' %s %s %s",
       command,
       psSqEscape(source.fullUrl),
+      methodArg,
       source.method,
       commandOptions.join(' ')
     )
