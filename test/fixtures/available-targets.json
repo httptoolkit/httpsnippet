@@ -358,5 +358,19 @@
         "description": "An HTTP Request Client Library"
       }
     ]
+  },
+  {
+    "key": "crystal",
+    "title": "Crystal",
+    "extname": ".cr",
+    "default": "native",
+    "clients": [
+      {
+        "key": "native",
+        "title": "http::client",
+        "link": "https://crystal-lang.org/api/master/HTTP/Client.html",
+        "description": "Crystal HTTP client"
+      }
+    ]
   }
 ]

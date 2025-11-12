@@ -3,6 +3,7 @@
 module.exports = {
   c: require('./c'),
   clojure: require('./clojure'),
+  crystal: require('./crystal'),
   csharp: require('./csharp'),
   go: require('./go'),
   http: require('./http'),
