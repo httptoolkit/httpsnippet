@@ -92,6 +92,9 @@ describe('Available Targets', function () {
       fixtures['available-targets'].should.containEql(target)
     })
   })
+
+  // Update with:
+  // node -e "console.log(JSON.stringify(require('.').availableTargets(), null, 2))" > ./test/fixtures/available-targets.json
 })
 
 describe('Custom targets', function () {
