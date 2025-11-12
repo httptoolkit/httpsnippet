@@ -330,6 +330,12 @@
         "title": "net::http",
         "link": "http://ruby-doc.org/stdlib-2.2.1/libdoc/net/http/rdoc/Net/HTTP.html",
         "description": "Ruby HTTP client"
+      },
+      {
+        "key": "faraday",
+        "title": "faraday",
+        "link": "https://github.com/lostisland/faraday",
+        "description": "Faraday HTTP client"
       }
     ]
   },

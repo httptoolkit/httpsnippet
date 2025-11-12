@@ -8,5 +8,6 @@ module.exports = {
     default: 'native'
   },
 
-  native: require('./native')
+  native: require('./native'),
+  faraday: require('./faraday')
 }
