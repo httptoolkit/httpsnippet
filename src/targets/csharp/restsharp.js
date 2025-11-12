@@ -1,17 +1,25 @@
 'use strict'
 
 const CodeBuilder = require('../../helpers/code-builder')
+const { escape } = require('../../helpers/format')
 const helpers = require('../../helpers/headers')
 
 module.exports = function (source, options) {
   const code = new CodeBuilder()
   const methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS']
 
+  function toPascalCase (str) {
+    return str.replace(
+      /\w+/g,
+      word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+    )
+  }
+
   if (methods.indexOf(source.method.toUpperCase()) === -1) {
     return 'Method not supported'
   } else {
-    code.push('var client = new RestClient("%s");', source.fullUrl)
-    code.push('var request = new RestRequest(Method.%s);', source.method.toUpperCase())
+    code.push('var client = new RestClient("%s//%s");', source.uriObj.protocol, source.uriObj.host)
+    code.push('var request = new RestRequest("%s", Method.%s);', escape(source.uriObj.path), toPascalCase(source.method))
   }
 
   // Add headers, including the cookies
@@ -32,14 +40,16 @@ module.exports = function (source, options) {
   }
 
   if (source.postData.text) {
+    const contentTypeHeader = helpers.getHeader(source.allHeaders, 'content-type')
+
     code.push(
-      'request.AddParameter("%s", %s, ParameterType.RequestBody);',
-      helpers.getHeader(source.allHeaders, 'content-type'),
+      'request.AddParameter(%s, %s, ParameterType.RequestBody);',
+      contentTypeHeader ? `"${escape(contentTypeHeader)}"` : 'null',
       JSON.stringify(source.postData.text)
     )
   }
 
-  code.push('IRestResponse response = client.Execute(request);')
+  code.push('var response = client.Execute(request);')
   return code.join()
 }
 
