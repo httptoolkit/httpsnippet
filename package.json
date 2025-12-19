@@ -1,5 +1,5 @@
 {
-  "version": "3.0.0",
+  "version": "3.0.1",
   "name": "@httptoolkit/httpsnippet",
   "description": "HTTP request snippet generator for *most* languages",
   "author": "Tim Perry <tim@httptoolkit.tech>",
