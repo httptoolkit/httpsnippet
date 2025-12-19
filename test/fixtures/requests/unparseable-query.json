@@ -1,6 +1,11 @@
 {
   "method": "GET",
   "url": "http://mockbin.com/har?&&a=b&&",
-  "httpVersion": "HTTP/1.1",
-  "queryString": []
+  "queryString": [
+    {
+      "name": "a",
+      "value": "b"
+    }
+  ],
+  "httpVersion": "HTTP/1.1"
 }

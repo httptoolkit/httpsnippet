@@ -242,9 +242,11 @@ HTTPSnippet.prototype.prepare = function (request) {
       request.uriObj.path = request.uriObj.pathname + '?' + request.uriObj.search
     }
   } else {
-    // We have no request.queryObj (so snippets won't send query params in a structured way)
-    // We keep the queryString in request.url (so it's sent raw everywhere)
+    // We keep the queryString in request.url (so it's sent raw everywhere) but disable it
+    // elsewhere, so it's omitted from automatic code generation cases.
     // request.fullUrl is recreated below (maybe mild fixed?) but preserves raw search etc
+    request.queryString = []
+    request.queryObj = {}
   }
 
   // construct a full url
