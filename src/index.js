@@ -168,13 +168,21 @@ HTTPSnippet.prototype.prepare = function (request) {
 
         request.postData.boundary = boundary
 
-        // Since headers are case-sensitive we need to see if there's an existing `Content-Type` header that we can
-        // override.
-        const contentTypeHeader = helpers.hasHeader(request.headersObj, 'content-type')
-          ? helpers.getHeaderName(request.headersObj, 'content-type')
-          : 'content-type'
+        const multipartContentType = 'multipart/form-data; boundary=' + boundary
 
-        request.headersObj[contentTypeHeader] = 'multipart/form-data; boundary=' + boundary
+        // We need to update the various header states to match the CT to our boundary:
+        if (helpers.hasHeader(request.headersObj, 'content-type')) {
+          // Since headers are case-sensitive we need to see if there's an existing `Content-Type`
+          // header that we can override.
+          const contentTypeHeader = helpers.getHeaderName(request.headersObj, 'content-type')
+          request.headersObj[contentTypeHeader] = multipartContentType
+
+          const headerEntry = request.headers.findLast(h => h.name.toLowerCase() === 'content-type')
+          headerEntry.value = multipartContentType
+        } else {
+          request.headersObj['Content-Type'] = multipartContentType
+          request.headers.push({ name: 'Content-Type', value: multipartContentType })
+        }
       }
       break
 

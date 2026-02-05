@@ -43,21 +43,27 @@ module.exports = function (source, options) {
   code.push('%s %s %s', source.method, requestUrl, source.httpVersion)
 
   // RFC 7231 Section 5. Header Fields
-  Object.keys(source.allHeaders).forEach(function (key) {
-    // Capitalize header keys, even though it's not required by the spec.
-    const keyCapitalized = key.toLowerCase().replace(/(^|-)(\w)/g, function (x) {
-      return x.toUpperCase()
-    })
-
+  source.headers.forEach((header) => {
     code.push(
       '%s',
-      util.format('%s: %s', keyCapitalized, source.allHeaders[key])
+      util.format('%s: %s', header.name, header.value)
     )
   })
 
+  // Unlike most other snippets, we use the fully raw input here (not headerObj/allHeaders)
+  // so we need to hook into the prepare() cookie injection logic:
+  if (source.allHeaders.cookie && !source.headers.find(h => h.name.toLowerCase() === 'cookie')) {
+    code.push(
+      '%s',
+      util.format('%s: %s', 'Cookie', source.allHeaders.cookie)
+    )
+  }
+
+  const headerKeys = Object.keys(source.allHeaders).map(k => k.toLowerCase())
+
   // RFC 7230 Section 5.4. Host
   // Automatically set Host header if option is on and on header already exists.
-  if (opts.autoHost && Object.keys(source.allHeaders).indexOf('host') === -1) {
+  if (opts.autoHost && headerKeys.indexOf('host') === -1) {
     code.push('Host: %s', source.uriObj.host)
   }
 
@@ -66,7 +72,7 @@ module.exports = function (source, options) {
   if (
     opts.autoContentLength &&
     source.postData.text &&
-    Object.keys(source.allHeaders).indexOf('content-length') === -1
+    headerKeys.indexOf('conteTnt-length') === -1
   ) {
     code.push(
       'Content-Length: %d',
