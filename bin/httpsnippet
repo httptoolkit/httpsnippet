@@ -5,8 +5,6 @@
 const chalk = require('chalk')
 const cmd = require('commander')
 const fs = require('fs')
-const readFile = require('fs-readfile-promise')
-const writeFile = require('fs-writefile-promise')
 const HTTPSnippet = require('..')
 const path = require('path')
 const pkg = require('../package.json')
@@ -46,7 +44,7 @@ if (cmd.output) {
 cmd.args.forEach(function (fileName) {
   const file = path.basename(fileName)
 
-  readFile(fileName)
+  fs.promises.readFile(fileName)
     .then(JSON.parse)
 
     .catch(function (e) {
@@ -86,7 +84,7 @@ cmd.args.forEach(function (fileName) {
         base: name + HTTPSnippet.extname(cmd.target)
       })
 
-      return writeFile(filename, output + '\n', function () {
+      return fs.promises.writeFile(filename, output + '\n').then(function () {
         console.log('%s %s > %s', chalk.green('✓'), chalk.cyan.bold(file), filename)
       })
     })

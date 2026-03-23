@@ -3,7 +3,6 @@
 'use strict'
 
 const debug = require('debug')('httpsnippet')
-const es = require('event-stream')
 const MultiPartForm = require('form-data')
 const qs = require('querystring')
 const reducer = require('./helpers/reducer')
@@ -160,10 +159,10 @@ HTTPSnippet.prototype.prepare = function (request) {
             request.postData.text += data
           }
         } else {
-          // eslint-disable-next-line array-callback-return
-          form.pipe(es.map(function (data, cb) {
+          form.on('data', function (data) {
             request.postData.text += data
-          }))
+          })
+          form.resume()
         }
 
         request.postData.boundary = boundary
